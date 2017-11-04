@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+	<head>
+		<base href="/localhost" />
+		<meta charset="UTF-8" />
+		<title><?= $title ?></title>
+		<meta name="description" content="<?= $description ?>" />
+		<meta name="keywords" content="<?= $keywords ?>" />
+		<link rel="stylesheet" href="style.css" type="text/css"/>
+	</head>
+
+	<body>
+		<header>
+			<h1>IIS - Lovci Mamutov</h1>
+		</header>
+			
+		<nav>
+			<ul>
+				<li><a href="iis/home">Home</a></li>		
+			</ul>
+		</nav>
+		<br clear="both" />
+		
+		<article>
+			<?php $this->controller->writeView(); // vložení aktuálního pohledu do šablony ?>
+		</article>
+		
+		<footer>
+			<p>Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</p>
+		</footer>
+	</body>
+</html>

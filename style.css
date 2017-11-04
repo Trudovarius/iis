@@ -1,0 +1,100 @@
+/*
+ *	       __          __                __            
+ *	  ____/ /__ _   __/ /_  ____  ____  / /__ _________
+ *	 / __  / _ \ | / / __ \/ __ \/ __ \/ //_// ___/_  /
+ *	/ /_/ /  __/ |/ / /_/ / /_/ / /_/ / ,< _/ /__  / /_
+ *	\__,_/\___/|___/_.___/\____/\____/_/|_(_)___/ /___/
+ *                                                   
+ *                                                           
+ *      TUTORIÁLY  <>  DISKUZE  <>  KOMUNITA  <>  SOFTWARE
+ * 
+ *	Tento zdrojový kód je součástí tutoriálů na programátorské 
+ *	sociální síti WWW.DEVBOOK.CZ	
+ *	
+ *	Kód můžete upravovat jak chcete, jen zmiňte odkaz 
+ *	na www.devbook.cz :-) 
+ */
+
+body {
+	font-family: verdana;
+	font-size: 14px;
+	width: 900px; 
+	margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+	color: #444444;
+	text-shadow: 3px 3px 3px #aaaaaa;
+}
+
+footer {
+	font-size: 11px;
+	text-align: center;
+	padding-top: 20px;
+}
+
+article {
+	text-shadow: 3px 3px 3px #aaaaaa;
+}
+
+nav ul {
+	list-style-type: none;
+}
+
+nav li {
+	float: left;
+	margin-right: 15px;
+}
+
+nav a {
+	background: #6FA4F8;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 10px;
+	text-decoration: none;
+	border: none;	
+}
+
+nav a:hover {
+	background: #2976f8;
+	color: #EEEEEE;
+	text-decoration: none;
+}
+
+input[type="submit"] {
+	background: #6FA4F8;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 10px;
+	border: 0px;
+}
+
+input[type="submit"]:hover {
+	background: #2976f8;
+	color: #EEEEEE;
+	cursor: pointer;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+	width: 250px;
+	border-radius: 5px;
+	border: 1px solid #aaaaaa;
+	padding: 0.3em;
+	margin:
+}
+
+input[type="submit"] {
+	padding: 10px 25px;
+	display: block;
+	margin: 0 auto;
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+textarea {
+	border-radius: 5px;
+	border: 1px solid #aaaaaa;
+	width: 483px;
+	height: 90px;
+}
