@@ -1,0 +1,24 @@
+.left {
+	float: left;
+	width: 45%;
+	padding: 2.5%;
+	background-color: black;
+}
+
+.right {
+	float: right;
+	width: 45%;
+	padding: 2.5%;
+	background-color: white;
+}
+
+.left, .right {
+	text-align: center;
+}
+
+.left input, .right input {
+	margin: auto;
+    content:'';
+    display: block; 
+    width: 50%;
+}
