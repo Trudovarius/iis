@@ -1,31 +1,47 @@
 <?php
 
 class User {
+	private $id;
 	private $name;
 	private $level;
 
-	public function __construct ($name, $level = null) {
-		$this->name = $name;
-		if (isset($level)) {
-			$this->level = $level;
-		} else {
-			$this->level = 0;
-		}
+	public function __construct ($name) {
+		$this->name = $name;$this->level = 0;
 	}
 
+	// Nastaví ID používateľa
+	public function setId() {
+		$this->id = Db::querySingle('SELECT id FROM user WHERE name = ?', [$this->name]);
+	}
+
+	// Vráti ID používateľa
+	public function getId() {
+		return $this->id;
+	}
+
+	// Vloží užívateľa do DB
+	// Používa sa len pri registrácí nového užívateľa
 	public function insertToDb() {
 		Db::query('INSERT INTO user (name, level) VALUES (?, ?)', [$this->name, $this->level]);
 	}
 
+	// Nastaví heslo
 	public function setPassword($password) {
 		Db::query('UPDATE user SET password = ? WHERE name = ?', [$password, $this->name] );
 	}
 
+	// Vytiahne heslo z DB
+	// Používa sa len pri prihlasovaní 
 	public function getPassword() {
 		return Db::querySingle('SELECT password FROM user WHERE name = ?', [$this->name]);
 	}
 
+	// Vráti meno
 	public function getName() {
 		return $this->name;
+	}
+
+	public function getMyHunters() {
+		return Db::queryAll('SELECT * FROM hunter WHERE user = ?', [$this->id]);
 	}
 }

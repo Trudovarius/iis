@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="iis/css/style.css" type="text/css"/>
 		<link rel="stylesheet" href="iis/css/navigation.css" type="text/css"/>
 		<link rel="stylesheet" href="iis/css/start.css" type="text/css"/>
+		<link rel="stylesheet" href="iis/css/hunter.css" type="text/css"/>
 	</head>
 	<body>
 		<header>
@@ -20,13 +21,10 @@
 			<div class="center">
 			<ul>
 				<li><a href="iis/home">Home</a></li>
-				<?php
-					if (isset($_SESSION['user'])) {
-				?>
-						<li><a href="iis/logout">Log out</a></li>
-				<?php
-					}
-				?>		
+				<?php if (isset($_SESSION['user'])): ?>
+					<li><a href="iis/hunter/overview">Hunters</a></li>
+					<li><a href="iis/logout">Log out</a></li>
+				<?php endif; ?>		
 			</ul>
 			</div>
 		</nav>	

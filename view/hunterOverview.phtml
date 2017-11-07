@@ -1,0 +1,17 @@
+<h1>Hunters</h1>
+<table id="hunters">
+	<tr>
+		<th>Name</th>
+		<th>Health</th>
+		<th>Ability</th>
+		<th>Available</th>
+	</tr>
+	<?php foreach ($hunters as $hunter):?>
+		<tr>
+			<td><?= $hunter['name'] ?></td>
+			<td><?= $hunter['health'] ?></td>
+			<td><?= $hunter['ability'] ?></td>
+			<td><?= $hunter['available'] ?></td>
+		</tr>
+	<?php endforeach; ?>
+</table>

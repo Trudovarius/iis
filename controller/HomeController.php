@@ -9,6 +9,7 @@ class HomeController extends Controller
 		$this->header['description'] = "Homepage of IIS project.";
 		$this->header['keywords'] = ["iis", "home"];
 
+		// Spracovanie odoslanych formularov na registraciu a prihlasenie
 		if (isset($_POST['type'])) {
 			$type = array_shift($_POST);
 			if ($type == 'login') {
@@ -18,8 +19,19 @@ class HomeController extends Controller
 			}
 		}
 
+		// Ak je prihlaseny pouzivatel, vytvor instanci tridy USER
+		if (isLoggedIn()) {
+			$user = new User($_SESSION['user']);
+			$user->setId();
+			
+			// V prípade, že užívateľ nemá žiadneho lovca, presmerovanie a vytvorenie nového lovca
+	    	if (!hasHunter($user->getId())) {
+	    		$this->redirect('iis/hunter/create');
+	    	}
+		}
+
 		// Nastavení hlavní šablony
-		if (isset($_SESSION['user']))
+		if (isLoggedIn())
 			$this->view = 'home';
 		else
 			$this->view = 'start';
@@ -29,6 +41,7 @@ class HomeController extends Controller
     	$user = new User($_POST['name']);
     	if ($_POST['password'] == $user->getPassword())
     		$_SESSION['user'] = $user->getName();
+    	$user->setId();
     }
 
     public function register() {

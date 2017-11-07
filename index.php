@@ -20,6 +20,9 @@ session_start();
 // Nastavení interního kódování pro funkce pro práci s řetězci
 mb_internal_encoding("UTF-8");
 
+// Pripojenie suboru s pomocnymi funkciami
+require_once('functions.php');
+
 // Callback pro automatické načítání tříd controllerů a modelů
 function autoloadFunction($class)
 {
@@ -35,6 +38,7 @@ spl_autoload_register("autoloadFunction");
 
 // Připojení k databázi
 Db::connect("127.0.0.1", "root", "", "iis");
+
 
 // Vytvoření routeru a zpracování parametrů od uživatele z URL
 $router = new RouterController();
