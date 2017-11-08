@@ -1,10 +1,23 @@
-#hunters , #hunters td, #hunters th{	
+#myHunters, #myHunters td, #myHunters th {	
 	border-collapse: collapse;
     border: 1px solid black;
 }
 
-#hunters {
+#myHunters {
 	width: 45%;
-	padding: 2.5%;
+	margin: 2.5%;
 	text-align: center;
+	float: left;
+}
+
+#allHunters, #allHunters td, #allHunters th {	
+	border-collapse: collapse;
+    border: 1px solid black;
+}
+
+#allHunters {
+	width: 45%;
+	margin: 2.5%;
+	text-align: center;
+	float: right;
 }

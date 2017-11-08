@@ -39,7 +39,8 @@ class HomeController extends Controller
 
     public function login() {
     	$user = new User($_POST['name']);
-    	if ($_POST['password'] == $user->getPassword())
+    	$hash = sha1($_POST['password']);
+    	if ($hash == $user->getPassword())
     		$_SESSION['user'] = $user->getName();
     	$user->setId();
     }

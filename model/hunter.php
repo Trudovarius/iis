@@ -19,4 +19,8 @@ class Hunter {
 		Db::query('INSERT INTO hunter (user, name, health, ability, available) VALUES (?, ?, ?, ?, ?)', [$this->user, $this->name, $this->health, $this->ability, $this->available]);
 	}
 
+	public static function getAllHunters() {
+		return Db::queryAll('SELECT * FROM hunter');
+	}
+
 }

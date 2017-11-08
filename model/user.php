@@ -27,7 +27,8 @@ class User {
 
 	// Nastaví heslo
 	public function setPassword($password) {
-		Db::query('UPDATE user SET password = ? WHERE name = ?', [$password, $this->name] );
+		$hash = sha1($password);
+		Db::query('UPDATE user SET password = ? WHERE name = ?', [$hash, $this->name] );
 	}
 
 	// Vytiahne heslo z DB
@@ -43,5 +44,9 @@ class User {
 
 	public function getMyHunters() {
 		return Db::queryAll('SELECT * FROM hunter WHERE user = ?', [$this->id]);
+	}
+
+	public static function getUserNameById($id) {
+		return Db::querySingle('SELECT name FROM user WHERE id = ?', [$id]);
 	}
 }

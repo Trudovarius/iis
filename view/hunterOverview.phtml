@@ -1,17 +1,60 @@
 <h1>Hunters</h1>
-<table id="hunters">
+<table id="myHunters">
+	<tr>
+		<th colspan="4">
+			My Hunters
+		</th>
+	</tr>
 	<tr>
 		<th>Name</th>
 		<th>Health</th>
 		<th>Ability</th>
 		<th>Available</th>
 	</tr>
-	<?php foreach ($hunters as $hunter):?>
+	<?php foreach ($myHunters as $hunter):?>
 		<tr>
 			<td><?= $hunter['name'] ?></td>
 			<td><?= $hunter['health'] ?></td>
 			<td><?= $hunter['ability'] ?></td>
-			<td><?= $hunter['available'] ?></td>
+			<td>
+				<?php if ($hunter['available'] == 1) : ?>
+					Available
+				<?php else : ?>
+					Unavailable
+				<?php endif; ?>
+				
+			</td>
+		</tr>
+	<?php endforeach; ?>
+</table>
+
+<table id="allHunters">
+	<tr>
+		<th colspan="5">
+			All Hunters
+		</th>
+	</tr>
+	<tr>
+		<th>Owner</th>
+		<th>Name</th>
+		<th>Health</th>
+		<th>Ability</th>
+		<th>Available</th>
+	</tr>
+	<?php foreach ($allHunters as $hunter):?>
+		<tr>
+			<td><?= User::getUserNameById($hunter['user']); ?></td>
+			<td><?= $hunter['name'] ?></td>
+			<td><?= $hunter['health'] ?></td>
+			<td><?= $hunter['ability'] ?></td>
+			<td>
+				<?php if ($hunter['available'] == 1) : ?>
+					Available
+				<?php else : ?>
+					Unavailable
+				<?php endif; ?>
+				
+			</td>
 		</tr>
 	<?php endforeach; ?>
 </table>

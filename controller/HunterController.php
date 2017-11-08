@@ -36,8 +36,12 @@ class HunterController extends Controller
 				$this->header['description'] = "User overview of all hunters";
 				$this->header['keywords'] = ["iis", "overview", "hunter", "hunters"];
 
-				$hunters = $user->getMyHunters();
-				$this->data['hunters'] = $hunters;
+				$myHunters = $user->getMyHunters();
+				$this->data['myHunters'] = $myHunters;
+
+				$allHunters = Hunter::getAllHunters();
+				$this->data['allHunters'] = $allHunters;
+
 
     			$this->view = 'hunterOverview';
     		}
