@@ -15,7 +15,7 @@
 		<tr>
 			<td><?= $hunter['name'] ?></td>
 			<td><?= $hunter['health'] ?></td>
-			<td><?= $hunter['ability'] ?></td>
+			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 			<td>
 				<?php if ($hunter['available'] == 1) : ?>
 					Available
@@ -46,7 +46,7 @@
 			<td><?= User::getUserNameById($hunter['user']); ?></td>
 			<td><?= $hunter['name'] ?></td>
 			<td><?= $hunter['health'] ?></td>
-			<td><?= $hunter['ability'] ?></td>
+			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 			<td>
 				<?php if ($hunter['available'] == 1) : ?>
 					Available

@@ -20,23 +20,23 @@
 		</header>			
 		<nav>
 			<div class="center">
-			<ul>
-				<li><a href="iis/home">Home</a></li>
-				<?php if (isset($_SESSION['user'])): ?>
-					<li><a href="iis/hunter/overview">Hunters</a></li>
-					<li><a href="iis/logout">Log out</a></li>
-				<?php endif; ?>		
-			</ul>
+				<ul>
+					<li><a href="iis/home">Home</a></li>
+					<?php if (isset($_SESSION['user'])): ?>
+						<li><a href="iis/hunter/overview">Hunters</a></li>
+						<li><a href="iis/logout">Log out</a></li>
+					<?php endif; ?>		
+				</ul>
 			</div>
 		</nav>	
 		<article>
 			<div class="center">
-			<?php $this->controller->writeView(); // vložení aktuálního pohledu do šablony ?>
+				<?php $this->controller->writeView(); // vložení aktuálního pohledu do šablony ?>
 			</div>
 		</article>		
 		<footer>
 			<div class="center">
-			<p>Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</p>
+				<p>Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</p>
 			</div>
 		</footer>
 	</body>

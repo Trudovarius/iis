@@ -47,14 +47,19 @@ class HomeController extends Controller
 			$this->view = 'start';
     }
 
+    // Overenie hesla, a nastavenie SESSION['user']
     public function login() {
     	$user = new User($_POST['name']);
     	$hash = sha1($_POST['password']);
-    	if ($hash == $user->getPassword())
+    	if ($hash == $user->getPassword()) {
     		$_SESSION['user'] = $user->getName();
-    	$user->setId();
+    		$user->setId();
+    	} else {
+    		// TO DO error msg
+    	}
     }
 
+    // Vlozenie udajov o uzivatelovi do DB
     public function register() {
     	$user = new User($_POST['name']);
     	$user->insertToDb();

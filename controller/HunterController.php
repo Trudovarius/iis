@@ -22,12 +22,22 @@ class HunterController extends Controller
 
     			$this->view = 'hunterCreate';
 
+                $this->data['abilities'] = Ability::getAllAbilities();
+
     			// Spracovanie formulara, vytvorenie lovca a vlozenie do DB
     			if (isset($_POST['hunterName'])) {
-    				$hunter = new Hunter($_POST['hunterName'], 1); // ability bude zatial 1,  TO DO ability
-    				$hunter->insertIntoDb();
 
-    				$this->redirect('iis/hunter/overview');
+                    // Overenie, ci ma uzivatel spravny pocet lovcov
+                    if (!($user->getMyHuntersCount() > $user->getLevel() )) {
+        				$hunter = new Hunter($_POST['hunterName'], 1); // ability bude zatial 1,  TO DO ability
+        				$hunter->insertIntoDb();
+                    }
+
+                    // Na začiatku si každý vytvorí 2 lovcov
+                    if ($user->getMyHuntersCount() == $user->getLevel()+1)
+    				    $this->redirect('iis/hunter/overview');
+                    else
+                        $this->redirect('iis/hunter/create');
     			}
     		// PREHLAD LOVCOV
     		} else if ($parameters[0] == 'overview') {

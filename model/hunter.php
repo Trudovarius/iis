@@ -15,19 +15,23 @@ class Hunter {
 		$this->available = 1;
 	}
 
+	// Vlozi lovca do databazy
 	public function insertIntoDb() {
 		Db::query('INSERT INTO hunter (user, name, health, ability, available) VALUES (?, ?, ?, ?, ?)', [$this->user, $this->name, $this->health, $this->ability, $this->available]);
 	}
 
+	// Vrati vsetkych lovcov
 	public static function getAllHunters() {
 		return Db::queryAll('SELECT * FROM hunter');
 	}
 
+	// Nastavi stanoviste
 	public static function setOutpost($hunterId, $outpostId) {
 		Db::query('UPDATE hunter SET outpost = ?, available = ? WHERE id = ?',[$outpostId, 0, $hunterId]);
 		Outpost::increaseHunterCount($outpostId);
 	}
 
+	// Vynuluje stanoviste
 	public static function unsetOutpost($hunterId, $outpostId) {
 		Db::query('UPDATE hunter SET outpost = ?, available = ? WHERE id = ?',[ 0, 1, $hunterId]);
 		Outpost::decreaseHunterCount($outpostId);

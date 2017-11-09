@@ -6,8 +6,15 @@ class User {
 	private $level;
 
 	public function __construct ($name) {
-		$this->name = $name;
-		$this->level = 0;
+		$user = Db::queryOne('SELECT * FROM user WHERE name = ?',[$name]);
+		if (empty($user)) {
+			$this->name = $name;
+			$this->level = 1;
+		} else {
+			$this->id = $user['id'];
+			$this->name = $user['name'];
+			$this->level = $user['level'];
+		}
 	}
 
 	// Nastaví ID používateľa
@@ -43,11 +50,17 @@ class User {
 		return $this->name;
 	}
 
+	// Vráti level
+	public function getLevel() {
+		return $this->level;
+	}
+
 	// Vráti všetkých lovcov, ktorý patria akutálnemu užívateľovi
 	public function getMyHunters() {
 		return Db::queryAll('SELECT * FROM hunter WHERE user = ?', [$this->id]);
 	}
 
+	// Vráti všetky stanovištia patriace aktuálnemi uživateľovi
 	public function getMyOutposts() {
 		return Db::queryAll('SELECT * FROM outpost WHERE user = ?', [$this->id]);
 	}
@@ -63,5 +76,10 @@ class User {
 			$outpost = new Outpost("Outpost".$i, $this->id);
 			$outpost->insertToDb();
 		}
+	}
+
+	// Vráti počet lovcov patriacich aktuálnemu užívateľovi
+	public function getMyHuntersCount() {
+		return Db::query('SELECT * FROM hunter WHERE user = ?', [$this->id]);		
 	}
 }

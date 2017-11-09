@@ -27,6 +27,7 @@ body{
 	margin: 0;
 	padding: 0;
 	min-height: 100%;
+	float: left;
 }
 
 header {
@@ -35,6 +36,7 @@ header {
 	background-color: white;
 	margin: 0;
 	padding: 0;
+	float: left;
 }
 
 article {
@@ -44,13 +46,16 @@ article {
 	min-height: 200px;
 	text-shadow: 3px 3px 3px #aaaaaa;
 	background-color: green;
+	float: left;
 }
 
 footer {
+	width: 100%;
 	font-size: 11px;
 	text-align: center;
 	padding: 20px;
 	background-color: red;
+	float: left;
 }
 
 .center {
