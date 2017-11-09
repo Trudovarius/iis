@@ -6,7 +6,8 @@ class User {
 	private $level;
 
 	public function __construct ($name) {
-		$this->name = $name;$this->level = 0;
+		$this->name = $name;
+		$this->level = 0;
 	}
 
 	// Nastaví ID používateľa
@@ -42,11 +43,25 @@ class User {
 		return $this->name;
 	}
 
+	// Vráti všetkých lovcov, ktorý patria akutálnemu užívateľovi
 	public function getMyHunters() {
 		return Db::queryAll('SELECT * FROM hunter WHERE user = ?', [$this->id]);
 	}
 
+	public function getMyOutposts() {
+		return Db::queryAll('SELECT * FROM outpost WHERE user = ?', [$this->id]);
+	}
+
+	// Vráti meno používateľa podľa zadaného ID, STATIC
 	public static function getUserNameById($id) {
 		return Db::querySingle('SELECT name FROM user WHERE id = ?', [$id]);
+	}
+
+	// Inicializuje prvé 3 stanovištia
+	public function initOutposts() {
+		for ($i = 0; $i < 3; $i++) {
+			$outpost = new Outpost("Outpost".$i, $this->id);
+			$outpost->insertToDb();
+		}
 	}
 }

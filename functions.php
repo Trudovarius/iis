@@ -8,6 +8,13 @@ function hasHunter($id) {
 		return true;
 }
 
+function hasOutpost($id) {
+	if (Db::query('SELECT * FROM outpost WHERE user = ?', [$id]) == 0)
+		return false;
+	else
+		return true;
+}
+
 // Je prihlásený nejaký používateľ
 function isLoggedIn() {
 	if (isset($_SESSION['user']))

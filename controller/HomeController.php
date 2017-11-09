@@ -28,6 +28,16 @@ class HomeController extends Controller
 	    	if (!hasHunter($user->getId())) {
 	    		$this->redirect('iis/hunter/create');
 	    	}
+
+	    	// V prípade, že užívateľ nemá žiadne stanovište,
+	    	if (!hasOutpost($user->getId())) {
+	    		$user->initOutposts();
+	    		$this->redirect('iis/home');
+	    	// Vykreslenie stanoviští
+	    	} else {
+	    		$outposts = $user->getMyOutposts();
+	    		$this->data['outposts'] = $outposts;
+	    	}
 		}
 
 		// Nastavení hlavní šablony

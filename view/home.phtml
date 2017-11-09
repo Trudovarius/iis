@@ -1,1 +1,9 @@
 <h1><?= $_SESSION['user'] ?> je bazerand</h1>
+<?php if (isset($outposts)) : ?>
+	<?php foreach ($outposts as $outpost) : ?>
+		<div style="float:left; margin: 10px;">
+			<p><?= $outpost['outpost'] ?></p>
+			<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/outpost.jpg"></a>
+		</div>
+	<?php endforeach; ?>
+<?php endif; ?>

@@ -23,4 +23,13 @@ class Hunter {
 		return Db::queryAll('SELECT * FROM hunter');
 	}
 
+	public static function setOutpost($hunterId, $outpostId) {
+		Db::query('UPDATE hunter SET outpost = ?, available = ? WHERE id = ?',[$outpostId, 0, $hunterId]);
+		Outpost::increaseHunterCount($outpostId);
+	}
+
+	public static function unsetOutpost($hunterId, $outpostId) {
+		Db::query('UPDATE hunter SET outpost = ?, available = ? WHERE id = ?',[ 0, 1, $hunterId]);
+		Outpost::decreaseHunterCount($outpostId);
+	}
 }
