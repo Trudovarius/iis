@@ -38,6 +38,19 @@ class HomeController extends Controller
 	    		$outposts = $user->getMyOutposts();
 	    		$this->data['outposts'] = $outposts;
 	    	}
+
+	    	// Generovanie hlaseni o mamutoch
+	    	// Vzdy budu aspon 2 nevybavene hlasenia
+	    	if (activeOutposts($outposts)) {
+	    		$i = hasReport($user->getId());
+	    		if (!$i) {
+	    			for (; $i < 2; $i++)
+	    				Report::createNew($user->getId());
+	    		}
+	    	}
+
+	    	// Vrati vsetky hlasenia z DB
+	    	$this->data['reports'] = $user->getMyReports();
 		}
 
 		// Nastavení hlavní šablony

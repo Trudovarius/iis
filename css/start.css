@@ -22,3 +22,14 @@
     display: block; 
     width: 50%;
 }
+
+#reports {
+	text-align: center;
+	float: right;
+}
+
+#reports table, #reports th, #reports td {
+	border-collapse: collapse;
+    border: 1px solid black;
+    padding: 3px;
+}

@@ -42,4 +42,24 @@ class Outpost {
 	public static function getHuntersByOutpostId($outpostId) {
 		return Db::queryAll('SELECT * FROM hunter WHERE outpost =?',[$outpostId]);
 	}
+
+	// Ak je na stanovisti aspon 1 lovec, je aktivne
+	public static function isActive($outpost) {
+		if ($outpost['hunterCount'] > 0)
+			return true;
+		else
+			return false;
+	}
+
+	// Vrati stanoviste kde je aspon 1 lovec
+	public static function getActiveOutpost($userId) {
+		$outposts = Db::queryAll('SELECT * FROM outpost WHERE user = ?', [$userId]);
+		foreach ($outposts as $outpost) {
+			if (self::isActive($outpost))
+				return $outpost;
+		}
+		return false;
+	}
+
+
 }

@@ -65,6 +65,11 @@ class User {
 		return Db::queryAll('SELECT * FROM outpost WHERE user = ?', [$this->id]);
 	}
 
+	// Vráti všetky stanovištia patriace aktuálnemi uživateľovi
+	public function getMyReports() {
+		return Db::queryAll('SELECT * FROM report WHERE user = ?', [$this->id]);
+	}
+
 	// Vráti meno používateľa podľa zadaného ID, STATIC
 	public static function getUserNameById($id) {
 		return Db::querySingle('SELECT name FROM user WHERE id = ?', [$id]);

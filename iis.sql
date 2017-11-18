@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2017 at 07:59 PM
+-- Generation Time: Nov 18, 2017 at 02:14 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -69,7 +69,7 @@ INSERT INTO `hunter` (`id`, `user`, `name`, `health`, `ability`, `available`, `o
 (2, 2, 'DominguezZZZ', 100, 5, 1, 0),
 (3, 2, 'HackD', 100, 4, 1, 0),
 (4, 3, 'Pravý Poso', 100, 4, 1, 0),
-(5, 1, 'XD', 100, 1, 1, 0),
+(5, 1, 'XD', 100, 1, 0, 9),
 (6, 4, 'mľask', 100, 3, 1, 0),
 (7, 4, 'boha', 100, 1, 1, 0),
 (8, 4, 'tvoja mama', 100, 2, 1, 0),
@@ -112,7 +112,7 @@ INSERT INTO `outpost` (`id`, `outpost`, `user`, `capacity`, `hunterCount`) VALUE
 (6, 'Outpost2', 2, 3, 0),
 (7, 'Outpost0', 1, 3, 0),
 (8, 'Outpost1', 1, 3, 0),
-(9, 'Outpost2', 1, 3, 0),
+(9, 'Outpost2', 1, 3, 1),
 (10, 'Outpost0', 3, 3, 0),
 (11, 'Outpost1', 3, 3, 0),
 (12, 'Outpost2', 3, 3, 0),
@@ -122,6 +122,29 @@ INSERT INTO `outpost` (`id`, `outpost`, `user`, `capacity`, `hunterCount`) VALUE
 (16, 'Outpost0', 5, 3, 1),
 (17, 'Outpost1', 5, 3, 0),
 (18, 'Outpost2', 5, 3, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `date` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `outpost` int(11) NOT NULL,
+  `mammothCount` int(11) NOT NULL,
+  `completion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Dumping data for table `report`
+--
+
+INSERT INTO `report` (`id`, `user`, `date`, `outpost`, `mammothCount`, `completion`) VALUES
+(3, 2, '2017-11-18 14:02:16', 5, 2, 0),
+(4, 2, '2017-11-18 14:02:16', 5, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -170,6 +193,12 @@ ALTER TABLE `outpost`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -196,6 +225,11 @@ ALTER TABLE `hunter`
 --
 ALTER TABLE `outpost`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user`
 --

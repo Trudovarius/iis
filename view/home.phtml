@@ -1,9 +1,40 @@
 <h1><?= $_SESSION['user'] ?> je bazerand</h1>
-<?php if (isset($outposts)) : ?>
-	<?php foreach ($outposts as $outpost) : ?>
-		<div style="float:left; margin: 10px;">
-			<p><?= $outpost['outpost'] ?></p>
-			<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/outpost.jpg"></a>
-		</div>
-	<?php endforeach; ?>
-<?php endif; ?>
+<div id="outposts">
+	<?php if (isset($outposts)) : ?>
+		<?php foreach ($outposts as $outpost) : ?>
+			<div style="float:left; margin: 10px;">
+				<p><?= $outpost['outpost'] ?></p>
+				<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/outpost.jpg"></a>
+			</div>
+		<?php endforeach; ?>
+	<?php endif; ?>
+</div>
+<div id="reports">
+	<table>
+		<tr>
+			<th colspan="4">Reports</th>
+		</tr>
+		<?php if (isset($reports)) : ?>
+			<?php if (!empty($reports)) :   // TO DO?>
+				<tr>
+					<th>Date</th>
+					<th>Outpost</th>
+					<th>Mammoths seen</th>
+					<th>Completion</th>
+				</tr>
+				<?php foreach ($reports as $report) : ?>
+					<tr>
+						<td><?= $report['date'] ?></td>
+						<td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
+						<td><?= $report['mammothCount'] ?></td>
+						<td><?= $report['completion'] ?></td>
+					</tr>
+				<?php endforeach; ?>
+			<?php else : ?>
+				<tr>
+					<td colspan="4">You have no reports. Try to assign some hunters to outposts.</td>
+				</tr>
+			<?php endif; ?>
+		<?php endif; ?>
+	</table>
+</div>
