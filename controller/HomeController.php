@@ -23,21 +23,24 @@ class HomeController extends Controller
 		if (isLoggedIn()) {
 			$user = new User($_SESSION['user']);
 			$user->setId();
-			
+
+
 			// V prípade, že užívateľ nemá žiadneho lovca, presmerovanie a vytvorenie nového lovca
 	    	if (!hasHunter($user->getId())) {
 	    		$this->redirect('iis/hunter/create');
 	    	}
 
-	    	// V prípade, že užívateľ nemá žiadne stanovište,
-	    	if (!hasOutpost($user->getId())) {
-	    		$user->initOutposts();
-	    		$this->redirect('iis/home');
-	    	// Vykreslenie stanoviští
-	    	} else {
-	    		$outposts = $user->getMyOutposts();
-	    		$this->data['outposts'] = $outposts;
-	    	}
+	    	// Ziskanie informacii o stanovistiach z db
+    		$outposts = $user->getMyOutposts();
+    		$this->data['outposts'] = $outposts;
+
+    		// Ziskanie informacii o jamach z DB
+    		$pits = $user->getMyPits();
+    		$this->data['pits'] = $pits;
+
+    		// Overenie ci uz nejaka expedicia skoncila
+    		Expedition::check($user->getId());
+
 
 	    	// Generovanie hlaseni o mamutoch
 	    	// Vzdy budu aspon 2 nevybavene hlasenia
@@ -77,5 +80,11 @@ class HomeController extends Controller
     	$user = new User($_POST['name']);
     	$user->insertToDb();
     	$user->setPassword($_POST['password']);
+
+	    // Generovanie jám
+    	Pit::generatePits($user->getId());
+	    
+	    // Generovanie stanovosti
+	    $user->initOutposts();
     }
 }

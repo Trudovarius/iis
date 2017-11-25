@@ -1,0 +1,76 @@
+<h1>Create Expedition</h1>
+<table id="expeditionReport">
+    <tr>
+        <th colspan="2">
+            Report Information
+        </th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <img src="iis/img/outpost.jpg">
+        </td>
+    </tr>
+    <tr>
+        <th>Date: </th>
+        <td><?= $report['date'] ?></td>
+    </tr>
+    <tr>
+        <th>From outpost:</th>
+        <td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
+    </tr>
+    <tr>
+        <th>Mammoth Count</th>
+        <td><?= $report['mammothCount'] ?></td>
+    </tr>
+</table>
+
+<form method="POST">
+    <table id="expeditionHunter">
+        <tr>
+            <th colspan="4">Available Hunters</th>
+        </tr>
+        <tr>
+            <th>Name:</th>
+            <th>Health:</th>
+            <th>Ability:</th>
+            <th></th>
+        </tr>
+        <?php foreach ($hunters as $hunter) : ?>
+            <?php if ($hunter['available'] == 1) : ?>
+                <tr>
+                    <td><?= $hunter['name'] ?></td>
+                    <td><?= $hunter['health'] ?></td>
+                    <td><?= Ability::getAbilityName($hunter['ability']) ?></td>
+                    <td>
+                        <input type="checkbox" name="hunterId[]" value="<?= $hunter['id'] ?>">
+                    </td> 
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>
+
+    <table id="pits">
+        <tr>
+            <th colspan="3">Available Pits</th>
+        </tr>
+        <?php if (!empty($pits)) : ?>
+                <?php foreach($pits as $pit) : ?>
+                    <?php if ($pit['available']) : ?>
+                        <tr>
+                            <td><img src="iis/img/pit.jpg" width="70" height="70"></td>
+                            <td><?= $pit['id'] ?></td>
+                            <td>
+                                <input type="radio" name="pitId" value="<?= $pit['id'] ?>" required>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+        <?php else : ?>
+            <tr>
+                <th colspan="3">No pits available, wait for other expeditions to finish.</th>
+            </tr>
+        <?php endif; ?>
+    </table>
+    <input type="hidden" name="report" value="<?= $report['id'] ?>">
+    <input type="submit" value="Create expedition">
+</form>

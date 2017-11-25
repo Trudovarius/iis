@@ -43,6 +43,7 @@ class RouterController extends Controller
 		$iis = array_shift($parsedURL);
 		// kontroler je 1. parametr URL
 		$controllerClass = $this->dashToCamelCase(array_shift($parsedURL)) . 'Controller';
+
 		
 		if (file_exists('controller/' . $controllerClass . '.php'))
 			$this->controller = new $controllerClass;

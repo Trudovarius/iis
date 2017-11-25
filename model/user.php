@@ -24,7 +24,10 @@ class User {
 
 	// Vráti ID používateľa
 	public function getId() {
-		return $this->id;
+		if (isset($this->id))
+			return $this->id;
+		else
+			return $this->id = Db::querySingle('SELECT id FROM user WHERE name = ?', [$this->name]);
 	}
 
 	// Vloží užívateľa do DB
@@ -65,9 +68,14 @@ class User {
 		return Db::queryAll('SELECT * FROM outpost WHERE user = ?', [$this->id]);
 	}
 
+	// Vráti všetky jamy patriace aktuálnemi uživateľovi
+	public function getMyPits() {
+		return Db::queryAll('SELECT * FROM pit WHERE user = ?', [$this->id]);
+	}
+
 	// Vráti všetky stanovištia patriace aktuálnemi uživateľovi
 	public function getMyReports() {
-		return Db::queryAll('SELECT * FROM report WHERE user = ?', [$this->id]);
+		return Db::queryAll('SELECT * FROM report WHERE user = ? ORDER BY date DESC', [$this->id]);
 	}
 
 	// Vráti meno používateľa podľa zadaného ID, STATIC

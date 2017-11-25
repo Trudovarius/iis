@@ -1,0 +1,43 @@
+#expeditionReport, #expeditionReport td, #expeditionReport th {	
+	border-collapse: collapse;
+    border: 1px solid black;
+}
+
+#expeditionReport {
+	float:left;
+	text-align: center;
+}
+
+#expeditionReport td, #expeditionReport th {	
+	padding: 3px;
+}
+
+#expeditionHunter, #expeditionHunter td, #expeditionHunter th {	
+	border-collapse: collapse;
+    border: 1px solid black;
+}
+
+#expeditionHunter {
+	float: left;
+	text-align: center;
+	margin-left: 50px;
+}
+
+#expeditionHunter td, #expeditionHunter th {	
+	padding: 3px;
+}
+
+#pits, #pits td, #pits th {	
+	border-collapse: collapse;
+    border: 1px solid black;
+}
+
+#pits {
+	float: left;
+	text-align: center;
+	margin-left: 50px;
+}
+
+#pits td, #pits th {	
+	padding: 3px;
+}

@@ -1,13 +1,25 @@
 <h1><?= $_SESSION['user'] ?> je bazerand</h1>
-<div id="outposts">
-	<?php if (isset($outposts)) : ?>
-		<?php foreach ($outposts as $outpost) : ?>
-			<div style="float:left; margin: 10px;">
-				<p><?= $outpost['outpost'] ?></p>
-				<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/outpost.jpg"></a>
-			</div>
-		<?php endforeach; ?>
-	<?php endif; ?>
+<div id="map">
+	<div id="outposts">
+		<?php if (isset($outposts)) : ?>
+			<?php foreach ($outposts as $outpost) : ?>
+				<div style="float:left; margin: 10px;">
+					<p><?= $outpost['outpost'] ?></p>
+					<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/outpost.jpg"></a>
+				</div>
+			<?php endforeach; ?>
+		<?php endif; ?>
+	</div>
+	<div id="pits">
+		<?php if (isset($pits)) : ?>
+			<?php foreach ($pits as $pit) : ?>
+				<div style="float:left; margin: 10px;">
+					<p><?= $pit['id'] ?></p>
+					<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/pit.jpg" width="70" height="70"></a>
+				</div>
+			<?php endforeach; ?>
+		<?php endif; ?>
+	</div>
 </div>
 <div id="reports">
 	<table>
@@ -23,12 +35,37 @@
 					<th>Completion</th>
 				</tr>
 				<?php foreach ($reports as $report) : ?>
-					<tr>
-						<td><?= $report['date'] ?></td>
-						<td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
-						<td><?= $report['mammothCount'] ?></td>
-						<td><?= $report['completion'] ?></td>
-					</tr>
+					<?php if ($report['completion'] == 0) : ?>
+						<tr>
+							<td><?= $report['date'] ?></td>
+							<td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
+							<td><?= $report['mammothCount'] ?></td>
+							<?php if ($report['completion'] == '1') : ?>
+								<td>Completed</td>
+							<?php else : ?>
+								<?php if(!Report::hasExpedition($report['id'])) : ?>
+									<td>
+										<form method="POST" action="iis/expedition/create">
+											<input type="hidden" name="report" value="<?= $report['id'] ?>">
+											<input type="submit" value="Create Expedition">
+										</form>
+									</td>
+								<?php else : ?>
+									<td>Expedition in progress</td>
+								<?php endif; ?>
+							<?php endif; ?>
+						</tr>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php foreach ($reports as $report) : ?>
+					<?php if ($report['completion'] == 1) : ?>
+						<tr>
+							<td><?= $report['date'] ?></td>
+							<td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
+							<td><?= $report['mammothCount'] ?></td>
+							<td>Completed</td>
+						</tr>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			<?php else : ?>
 				<tr>

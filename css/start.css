@@ -24,6 +24,7 @@
 }
 
 #reports {
+	width: 45%;
 	text-align: center;
 	float: right;
 }
@@ -32,4 +33,10 @@
 	border-collapse: collapse;
     border: 1px solid black;
     padding: 3px;
+}
+
+#map {
+    border: 1px solid black;
+	width: 50%;
+	float: left;
 }

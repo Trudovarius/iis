@@ -17,6 +17,13 @@ session_start();
  *	na www.devbook.cz :-) 
  */
 
+// Automatické odhlásenie o 30 minútach
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    session_unset();
+    session_destroy();
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
 // Nastavení interního kódování pro funkce pro práci s řetězci
 mb_internal_encoding("UTF-8");
 

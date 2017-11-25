@@ -20,7 +20,7 @@ class Outpost {
 	}
 
 	// Vrati stanoviste podle ID
-	public function getOutpostById($id) {
+	public static function getOutpostById($id) {
 		return Db::queryOne('SELECT * FROM outpost WHERE id = ?', [$id]);
 	}
 
@@ -40,7 +40,7 @@ class Outpost {
 
 	// Vrati lovcov ktory su na tomto stanovisti
 	public static function getHuntersByOutpostId($outpostId) {
-		return Db::queryAll('SELECT * FROM hunter WHERE outpost =?',[$outpostId]);
+		return Db::queryAll('SELECT * FROM hunter JOIN outpost_member ON hunter.id=outpost_member.hunterId WHERE outpostId = ? AND until = ?',[$outpostId, ""]);
 	}
 
 	// Ak je na stanovisti aspon 1 lovec, je aktivne

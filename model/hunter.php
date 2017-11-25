@@ -27,13 +27,26 @@ class Hunter {
 
 	// Nastavi stanoviste
 	public static function setOutpost($hunterId, $outpostId) {
-		Db::query('UPDATE hunter SET outpost = ?, available = ? WHERE id = ?',[$outpostId, 0, $hunterId]);
+		Db::query('INSERT INTO outpost_member (hunterId, outpostId, since, until) VALUES (?, ?, ?, ?)',[$hunterId, $outpostId, date('Y-m-d H:i:s'), ""]);
+		Db::query('UPDATE hunter SET available = ? WHERE id = ?',[0, $hunterId]);
 		Outpost::increaseHunterCount($outpostId);
 	}
 
 	// Vynuluje stanoviste
 	public static function unsetOutpost($hunterId, $outpostId) {
-		Db::query('UPDATE hunter SET outpost = ?, available = ? WHERE id = ?',[ 0, 1, $hunterId]);
+		Db::query('UPDATE outpost_member SET until = ? WHERE hunterId = ? AND outpostId = ?',[date('Y-m-d H:i:s'), $hunterId, $outpostId]);
+		Db::query('UPDATE hunter SET available = ? WHERE id = ?',[1, $hunterId]);
 		Outpost::decreaseHunterCount($outpostId);
+	}
+
+	// Vlozi zaznam o vrazde do DB
+	public static function kill($hunterId, $mammothId, $pitId) {
+		// Murder.Type == 0 znamená že lovca zabil mamut
+		Db::query('INSERT INTO murder (hunterId, mammothId, date, type, pitId) VALUES (?, ?, ?, ?, ?)', [$hunterId, $mammothId, date('Y-m-d H:i:s'), 0, $pitId]);
+	}
+
+	// Aktualizovanie udajov o lovcovi
+	public static function update($hunter) {
+		Db::query('UPDATE hunter SET health = ?, available = ? WHERE id = ?', [$hunter['health'], $hunter['available'], $hunter['id']]);
 	}
 }

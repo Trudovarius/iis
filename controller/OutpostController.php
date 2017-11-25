@@ -13,6 +13,9 @@ class OutpostController extends Controller
             $this->header['description'] = "Site for managing outposts and hunters.";
             $this->header['keywords'] = ["iis", "outpost"];
 
+            // Overenie ci uz nejaka expedicia skoncila
+            Expedition::check($user->getId());
+
             if (isset($parameters[0])) {
                 if ($parameters[0] == 'detail') {
 
