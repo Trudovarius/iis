@@ -14,6 +14,7 @@ class HunterController extends Controller
 
         // Overenie ci uz nejaka expedicia skoncila
         Expedition::check($user->getId());
+        $user->computeLevel();
 
     	if (isset($parameters)) {
     		// VYTVORENIE NOVEHO LOVCA
@@ -52,7 +53,12 @@ class HunterController extends Controller
 				$myHunters = $user->getMyHunters();
 				$this->data['myHunters'] = $myHunters;
 
-				$allHunters = Hunter::getAllHunters();
+				$allHunters = Db::queryAll('SELECT COUNT(murder.hunterId) as kills, hunter.user, hunter.id, hunter.name, hunter.ability
+                    FROM murder
+                    LEFT JOIN hunter  ON murder.hunterId=hunter.id
+                    WHERE murder.type = "1"
+                    GROUP BY hunter.user, hunter.id, hunter.name, hunter.ability
+                    ORDER BY kills DESC');
 				$this->data['allHunters'] = $allHunters;
 
 

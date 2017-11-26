@@ -1,0 +1,51 @@
+<h1>Expedition detail</h1>
+<div id="mammoths">
+	<h3>Target mammoths</h3>
+	<?php foreach ($mammoths as $mammoth) : ?>
+		<div class="mammoth">
+			<img src="iis/img/mammoth.png" height="70px">
+			<p><?= $mammoth['properties'] . ' ' . $mammoth['gender'] . ', ' . $mammoth['sign'] ?></p>
+		</div>
+	<?php endforeach; ?>
+</div>
+<div id="hunters">
+	<h3>Participated hunters</h3>
+	<?php foreach ($hunters as $hunter) : ?>
+		<div class="hunter">
+			<div>
+				<img src="iis/img/hunter.png" height="70px">
+				<p class="hunterName"><?= $hunter['name'] ?></p>
+				<p class="hunterInfo"><?= $hunter['health'] . 'hp, ' . Ability::getAbilityName($hunter['ability']) ?></p>
+			</div>
+		</div>
+	<?php endforeach; ?>
+</div>
+<div id="results">
+	<h3>Results</h3>
+	<div>
+	</div>
+	<div id="murders">
+		<h4>Kills</h4>
+		<?php foreach ($murders as $murder) : ?>
+			<?php if ($murder['type'] == 1) : ?>
+				<hr>
+				<div class="murder">
+					<img src="iis/img/hunter.png" height="20px">
+					<?= $murder['name'] ?> killed <?= $murder['properties'] . ' ' . $murder['gender'] ?>
+					<img src="iis/img/mammoth.png" height="20px">
+				</div>
+			<?php endif; ?> 
+		<?php endforeach; ?>
+		<?php foreach ($murders as $murder) : ?>
+			<?php if ($murder['type'] == 0) : ?>
+				<hr>
+				<div class="murder">
+					<img src="iis/img/mammoth.png" height="20px">
+					<?= ucfirst($murder['properties']) . ' ' . $murder['gender'] ?> killed <?= $murder['name'] ?>
+					<img src="iis/img/hunter.png" height="20px">
+				</div>
+			<?php endif; ?> 
+		<?php endforeach; ?>
+		<hr>
+	</div>
+</div>

@@ -2,7 +2,7 @@
 
 // Je v DB lovec ktorý patrí užívateľovi s daným ID?
 function hasHunter($id) {
-	if (Db::query('SELECT * FROM hunter WHERE user = ?', [$id]) == 0)
+	if (Db::query('SELECT * FROM hunter WHERE user = ? AND health > ?', [$id, 0]) == 0)
 		return false;
 	else
 		return true;

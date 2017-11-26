@@ -4,16 +4,22 @@ class User {
 	private $id;
 	private $name;
 	private $level;
+	private $food;
+	private $experience;
 
 	public function __construct ($name) {
 		$user = Db::queryOne('SELECT * FROM user WHERE name = ?',[$name]);
 		if (empty($user)) {
 			$this->name = $name;
 			$this->level = 1;
+			$this->food = 0;
+			$this->experience = 0;
 		} else {
 			$this->id = $user['id'];
 			$this->name = $user['name'];
 			$this->level = $user['level'];
+			$this->food =  $user['food'];
+			$this->experience =  $user['experience'];
 		}
 	}
 
@@ -33,7 +39,7 @@ class User {
 	// Vloží užívateľa do DB
 	// Používa sa len pri registrácí nového užívateľa
 	public function insertToDb() {
-		Db::query('INSERT INTO user (name, level) VALUES (?, ?)', [$this->name, $this->level]);
+		Db::query('INSERT INTO user (name, level, food, experience) VALUES (?, ?, ?, ?)', [$this->name, $this->level, $this->food, $this->experience]);
 	}
 
 	// Nastaví heslo
@@ -60,7 +66,7 @@ class User {
 
 	// Vráti všetkých lovcov, ktorý patria akutálnemu užívateľovi
 	public function getMyHunters() {
-		return Db::queryAll('SELECT * FROM hunter WHERE user = ?', [$this->id]);
+		return Db::queryAll('SELECT * FROM hunter WHERE user = ? ORDER BY health DESC', [$this->id]);
 	}
 
 	// Vráti všetky stanovištia patriace aktuálnemi uživateľovi
@@ -93,6 +99,15 @@ class User {
 
 	// Vráti počet lovcov patriacich aktuálnemu užívateľovi
 	public function getMyHuntersCount() {
-		return Db::query('SELECT * FROM hunter WHERE user = ?', [$this->id]);		
+		return Db::query('SELECT * FROM hunter WHERE user = ? AND health > ?', [$this->id,0]);		
+	}
+
+	// Prepočíta level pouzivatela
+	public function computeLevel() {
+		if ($this->experience > $this->level * 100) {
+			$this->level++;
+			$this->experience -= $this->level * 100;
+		}
+		Db::query('UPDATE user SET food = ?, experience = ? WHERE id = ?',[$this->food, $this->experience, $this->id]);
 	}
 }

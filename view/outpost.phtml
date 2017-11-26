@@ -1,7 +1,13 @@
 <div class="left">
 	<img src="iis/img/outpost.jpg"> 
 	<p>Owner: <?= User::getUserNameById($outpost['user']); ?></p>
-	<p>Name: <?= $outpost['outpost']; ?></p>
+	<p id="outpostName">
+		Name:
+		<form method="POST">
+			<input type="text" name="changeName" value="<?= $outpost['outpost']; ?>">
+			<input type="submit" value="Change Name">
+		</form>	
+	</p>
 	<p>Capacity:  <?= $outpost['capacity']; ?></p>
 	<p>Hunter count:  <?= $outpost['hunterCount']; ?></p>
 	<hr>
@@ -54,7 +60,12 @@
 		<?php foreach ($myHunters as $hunter):?>
 			<tr>
 				<td><?= $hunter['name'] ?></td>
-				<td><?= $hunter['health'] ?></td>
+				<td>
+					<?= $hunter['health'] ?>  
+					<?php if ($hunter['health'] < 0) : ?>
+						<img src="iis/img/skull.png" height="10px">
+					<?php endif; ?>
+					</td>
 				<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 				<td>
 					<?php if ($hunter['available'] == 1) : ?>

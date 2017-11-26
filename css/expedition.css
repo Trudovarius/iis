@@ -41,3 +41,71 @@
 #pits td, #pits th {	
 	padding: 3px;
 }
+
+#mammoths {
+    border: 1px solid black;
+    float: left;
+    width: 30%;
+}
+.mammoth {
+	padding: 3px;
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+
+.mammoth img {
+	float: left;
+}
+.mammoth p {
+	width: 60%;
+	float: right;
+	margin-right: 10px;
+}
+
+#hunters {
+    border: 1px solid black;
+    float: right;
+    width: 30%;	
+}
+
+.hunter {
+	width: 100%;
+}
+
+.hunter img {
+	float:left;
+}
+
+.hunter div {
+	width: 96%;
+	height: 70px;
+}
+.hunterName {
+	margin: 0;
+	padding-top: 15px;
+	float: right;
+	text-align: center;
+	width: 65%;
+	height: 5px;
+}
+.hunterInfo {
+	text-align: center;
+	float: right;
+	width: 65%;
+	height: 20px;
+}
+
+#results {
+	margin: auto;
+	width: 28%;
+    border: 1px solid black;
+    padding: 1%;
+    text-align: center;	
+}
+
+h3 {
+	margin: auto;
+	text-align: center;
+	padding: 5px;
+}

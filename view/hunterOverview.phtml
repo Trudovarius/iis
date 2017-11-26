@@ -14,7 +14,12 @@
 	<?php foreach ($myHunters as $hunter):?>
 		<tr>
 			<td><?= $hunter['name'] ?></td>
-			<td><?= $hunter['health'] ?></td>
+			<td>
+				<?= $hunter['health'] ?>  
+				<?php if ($hunter['health'] < 0) : ?>
+					<img src="iis/img/skull.png" height="10px">
+				<?php endif; ?>
+				</td>
 			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 			<td>
 				<?php if ($hunter['available'] == 1) : ?>
@@ -31,29 +36,22 @@
 <table id="allHunters">
 	<tr>
 		<th colspan="5">
-			All Hunters
+			Best Hunters
 		</th>
 	</tr>
 	<tr>
 		<th>Owner</th>
 		<th>Name</th>
-		<th>Health</th>
 		<th>Ability</th>
-		<th>Available</th>
+		<th>Kills</th>
 	</tr>
 	<?php foreach ($allHunters as $hunter):?>
 		<tr>
 			<td><?= User::getUserNameById($hunter['user']); ?></td>
 			<td><?= $hunter['name'] ?></td>
-			<td><?= $hunter['health'] ?></td>
 			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 			<td>
-				<?php if ($hunter['available'] == 1) : ?>
-					Available
-				<?php else : ?>
-					Unavailable
-				<?php endif; ?>
-				
+				<?= $hunter['kills'] ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

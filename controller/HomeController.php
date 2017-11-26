@@ -40,6 +40,7 @@ class HomeController extends Controller
 
     		// Overenie ci uz nejaka expedicia skoncila
     		Expedition::check($user->getId());
+    		$user->computeLevel();
 
 
 	    	// Generovanie hlaseni o mamutoch

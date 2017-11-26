@@ -40,9 +40,9 @@ class Hunter {
 	}
 
 	// Vlozi zaznam o vrazde do DB
-	public static function kill($hunterId, $mammothId, $pitId) {
+	public static function kill($hunterId, $mammothId, $pitId, $finishTime) {
 		// Murder.Type == 0 znamená že lovca zabil mamut
-		Db::query('INSERT INTO murder (hunterId, mammothId, date, type, pitId) VALUES (?, ?, ?, ?, ?)', [$hunterId, $mammothId, date('Y-m-d H:i:s'), 0, $pitId]);
+		Db::query('INSERT INTO murder (hunterId, mammothId, date, type, pitId) VALUES (?, ?, ?, ?, ?)', [$hunterId, $mammothId, $finishTime, 0, $pitId]);
 	}
 
 	// Aktualizovanie udajov o lovcovi

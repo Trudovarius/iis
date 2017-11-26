@@ -14,6 +14,8 @@ class ExpeditionController extends Controller
         } else {
             if (isset($parameters[0]) && $parameters[0] == 'create') {
                 $this->create();
+            } elseif (isset($parameters[0]) && $parameters[0] == 'detail') {
+                $this->detail($parameters[1]);
             }
         }
     }
@@ -46,5 +48,25 @@ class ExpeditionController extends Controller
             $this->redirect('iis/home');
         }
         $this->view = 'expeditionCreate';
+    }
+
+    // Detaily ohľadom expedicie
+    public function detail($expId) {
+        $expedition = Db::queryOne('SELECT * FROM expedition WHERE id = ?', [$expId]);
+        $report = Db::queryOne('SELECT * FROM report WHERE id = ?', [$expedition['report']]);
+        $mammoths = Db::queryAll('SELECT * FROM mammoth JOIN record ON mammoth.id=record.mammothId WHERE record.reportId = ?',[$report['id']]);
+        $hunters = Db::queryAll('SELECT * FROM hunter JOIN expedition_member ON hunter.id=expedition_member.hunterId WHERE expeditionId = ?', [$expId]);
+
+        $murders = Db::queryAll('SELECT * FROM murder LEFT JOIN mammoth ON murder.mammothId=mammoth.id LEFT JOIN hunter ON murder.hunterId=hunter.id WHERE date = ?', [$expedition['finishTime']]);
+
+
+
+        $this->data['expedition'] = $expedition;
+        $this->data['report'] = $report;
+        $this->data['mammoths'] = $mammoths;
+        $this->data['hunters'] = $hunters;
+        $this->data['murders'] = $murders;
+
+        $this->view = 'expeditionDetail';
     }
 }

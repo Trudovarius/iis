@@ -33,8 +33,8 @@ class Report {
 		return Db::queryOne("SELECT * FROM report WHERE id = ?", [$id]);
 	}
 
-	// Db::query vracia pocet ovplyvnenych riadkov databazy, cize ak ziadna expedicia neexistuje, vrati nulu
+	// Ak ziadna expedicia neexistuje, vrati nulu
 	public static function hasExpedition($reportId) {
-		return Db::query('SELECT * FROM expedition WHERE report = ?', [$reportId]);
+		return Db::queryAll('SELECT * FROM expedition WHERE report = ?', [$reportId]);
 	}
 }

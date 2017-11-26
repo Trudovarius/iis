@@ -6,7 +6,7 @@ class Mammoth {
 	private $properties;
 	private $gender;
 
-	private static $signs = ['broken fang', 'white fur', 'baby mammoth', 'huge', 'tiny', '3-legged', 'injured'];
+	private static $signs = ['broken fang', 'white fur', 'baby', 'huge', 'tiny', '3-legged', 'injured'];
 	private static $genders = ['male','female'];
 	private static $allProperties = ['angry', 'defensive', 'passive', 'neutral', 'agresive', 'fast', 'slow', 'agile'];
 
@@ -30,8 +30,8 @@ class Mammoth {
 	}
 
 	// Vlozi zaznam o vrazde mamuta do DB
-	public static function kill($mammothId, $pitId, $hunterId) {
+	public static function kill($mammothId, $pitId, $hunterId, $finishTime) {
 		// Pri hodnote Murder.Type == 1 sa jedna o vrazdu typu "lovec zabil mamuta"
-		Db::query('INSERT INTO murder (hunterId, mammothId, date, type, pitId) VALUES (?, ?, ?, ?, ?)', [$hunterId, $mammothId, date('Y-m-d H:i:s'), 1, $pitId]);
+		Db::query('INSERT INTO murder (hunterId, mammothId, date, type, pitId) VALUES (?, ?, ?, ?, ?)', [$hunterId, $mammothId, $finishTime, 1, $pitId]);
 	}
 }

@@ -24,7 +24,7 @@
 			<div class="center">
 				<ul>
 					<li><a href="iis/home">Home</a></li>
-					<?php if (isset($_SESSION['user'])): ?>
+					<?php if (isLoggedIn()): ?>
 						<li><a href="iis/hunter/overview">Hunters</a></li>
 						<li><a href="iis/logout">Log out</a></li>
 					<?php endif; ?>		

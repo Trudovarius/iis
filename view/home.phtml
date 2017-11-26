@@ -26,18 +26,23 @@
 		<tr>
 			<th colspan="4">Reports</th>
 		</tr>
+		<?php if (!activeOutposts($outposts)) : ?>
+			<tr>
+				<td colspan="4">There are no active outposts, no new reports will be generated.</td>
+			</tr>
+		<?php endif; ?>
 		<?php if (isset($reports)) : ?>
 			<?php if (!empty($reports)) :   // TO DO?>
 				<tr>
 					<th>Date</th>
 					<th>Outpost</th>
-					<th>Mammoths seen</th>
+					<th>Mammoths</th>
 					<th>Completion</th>
 				</tr>
 				<?php foreach ($reports as $report) : ?>
 					<?php if ($report['completion'] == 0) : ?>
 						<tr>
-							<td><?= $report['date'] ?></td>
+							<td><?= str_replace(' ',"<br>",$report['date']); ?></td>
 							<td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
 							<td><?= $report['mammothCount'] ?></td>
 							<?php if ($report['completion'] == '1') : ?>
@@ -60,10 +65,15 @@
 				<?php foreach ($reports as $report) : ?>
 					<?php if ($report['completion'] == 1) : ?>
 						<tr>
-							<td><?= $report['date'] ?></td>
+							<td><?= str_replace(' ',"<br>",$report['date']); ?></td>
 							<td><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></td>
 							<td><?= $report['mammothCount'] ?></td>
-							<td>Completed</td>
+							<td>
+								Completed <br>
+								<a href="iis/expedition/detail/<?= Report::hasExpedition($report['id'])[0]['id'] ?>">
+									See Expedition <img src="iis/img/lens.png" height="15px">
+								</a>
+							</td>
 						</tr>
 					<?php endif; ?>
 				<?php endforeach; ?>

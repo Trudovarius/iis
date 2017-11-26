@@ -32,7 +32,7 @@
 #reports table, #reports th, #reports td {
 	border-collapse: collapse;
     border: 1px solid black;
-    padding: 3px;
+    padding: 1px;
 }
 
 #map {

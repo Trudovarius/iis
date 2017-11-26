@@ -15,15 +15,22 @@ class OutpostController extends Controller
 
             // Overenie ci uz nejaka expedicia skoncila
             Expedition::check($user->getId());
+            $user->computeLevel();
 
             if (isset($parameters[0])) {
                 if ($parameters[0] == 'detail') {
+
+                    if (isset($_POST['changeName'])) {
+                        Db::query('UPDATE outpost SET outpost = ? WHERE id = ?', [$_POST['changeName'], $parameters[1]]);
+                    }
 
                     $outpost = Outpost::getOutpostById($parameters[1]);
                     $this->data['outpost'] = $outpost;
 
                     $this->data['myHunters'] = $user->getMyHunters();
                     $this->data['outpostHunters'] = Outpost::getHuntersByOutpostId($outpost['id']);
+
+
 
                     // Spracovanie formulára
                     // Overenie či je v stanovišti dostatok miesta
