@@ -1,0 +1,80 @@
+<h1><?= $hunter['name']?></h1>
+<div id="hunterDetail">
+	<div id="hunterDetailImg">
+		<img src="iis/img/hunter.png">
+	</div>
+	<table>
+		<tr>
+			<th>Health:</th>
+			<td><?= $hunter['health'] ?>hp</td>
+		</tr>
+		<tr>
+			<th>Ability:</th>
+			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
+		</tr>
+		<tr>
+			<th>Kills:</th>
+			<td><?= sizeof($kills); ?></td>
+		</tr>
+		<tr>
+			<th>Available:</th>
+			<td>
+				<?php if ($hunter['available'] == 1 ) : ?>
+					Available
+				<?php else : ?>
+					<?php if (!empty($expedition)) : ?>
+						<a href="iis/expedition/detail/<?= $expedition ?>">At expedition</a>
+					<?php elseif (!empty($outpost)) : ?>
+						<a href="iis/outpost/detail/<?= $outpost ?>">At outpost</a>
+					<?php else : ?>
+						Unavailable
+					<?php endif; ?>
+				<?php endif; ?>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<table id="hunterDetailKills">
+		<tr>
+			<th colspan="3">Kills</th>
+		</tr>
+		<tr>
+			<th>Mammoth</th>
+			<th>Date</th>
+			<th>Pit</th>
+		</tr>
+		<?php foreach ($kills as $kill) : ?>
+			<tr>
+				<td><?= $kill['properties'] . ' ' . $kill['gender'] ?></td>
+				<td><?= $kill['date'] ?></td>
+				<td><?= $kill['pitId'] ?></td>
+			</tr>
+		<?php endforeach; ?>
+		<tr>
+		<th colspan="53">
+			<?php if ($_GET['page'] != 1) : ?>
+				<a href="iis/hunter/detail/<?= $kill['hunterId'] ?>?page=<?= $_GET['page'] - 1 ?>"><</a>
+			<?php endif; ?>
+			<?= $_GET['page'] ?>
+			<?php if (sizeof($kills)%4 == 0) : ?>
+				<a href="iis/hunter/detail/<?= $kill['hunterId'] ?>?page=<?= $_GET['page'] + 1 ?>">></a>
+			<?php endif; ?>
+		</th>
+	</tr>
+	</table>	
+	<table id="hunterHistory">
+		<tr>
+			<th colspan="3">Expeditions</th>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<th>Detail</th>
+		</tr>
+		<?php foreach ($expeditions as $exp) : ?>
+			<tr>
+				<td><?= $exp['date'] ?></td>
+				<td><a href="iis/expedition/detail/<?= $exp['id'] ?>">Expedition Detail</a></td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
+</div>

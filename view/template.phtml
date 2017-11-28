@@ -12,7 +12,10 @@
 		<link rel="stylesheet" href="iis/css/hunter.css" type="text/css"/>
 		<link rel="stylesheet" href="iis/css/outpost.css" type="text/css"/>
 		<link rel="stylesheet" href="iis/css/expedition.css" type="text/css"/>
+		<link rel="stylesheet" href="iis/css/user.css" type="text/css"/>
+		<link rel="stylesheet" href="iis/css/admin.css" type="text/css"/>
 		<script type='text/javascript' src='iis/js/expedition.js'></script>
+		<script type='text/javascript' src='iis/js/heal.js'></script>
 	</head>
 	<body>
 		<header>
@@ -27,6 +30,12 @@
 					<?php if (isLoggedIn()): ?>
 						<li><a href="iis/hunter/overview">Hunters</a></li>
 						<li><a href="iis/logout">Log out</a></li>
+						<div id="stats">
+							<p id="stats-name"><a href="iis/user/detail/<?= $user->getId() ?>"><?= $_SESSION['user'] ?></a></p>
+							<p id="stats-food">Food: <?= $user->getFood()?></p>
+							<p id="stats-lvl">Level: <?= $user->getLevel()?></p>
+							<p id="stats-exp">Exp: <?= $user->getExp()?></p>
+						</div>
 					<?php endif; ?>		
 				</ul>
 			</div>
@@ -38,7 +47,17 @@
 		</article>		
 		<footer>
 			<div class="center">
-				<p>Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</p>
+				<p>
+					<?php if (isLoggedIn()) : ?>
+						<?php if ($user->getRole() == 'admin') : ?>
+							<a href="iis/admin/controlPanel">Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</a>
+						<?php else : ?>
+							Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)
+						<?php endif; ?>
+					<?php else : ?>
+						<a href="iis/admin/login">Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</a>
+					<?php endif; ?>
+				</p>
 			</div>
 		</footer>
 	</body>

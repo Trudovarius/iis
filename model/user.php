@@ -6,20 +6,23 @@ class User {
 	private $level;
 	private $food;
 	private $experience;
+	private $role;
 
 	public function __construct ($name) {
 		$user = Db::queryOne('SELECT * FROM user WHERE name = ?',[$name]);
 		if (empty($user)) {
 			$this->name = $name;
 			$this->level = 1;
-			$this->food = 0;
+			$this->food = 100;
 			$this->experience = 0;
+			$this->role = 'user';
 		} else {
 			$this->id = $user['id'];
 			$this->name = $user['name'];
 			$this->level = $user['level'];
 			$this->food =  $user['food'];
 			$this->experience =  $user['experience'];
+			$this->role = $user['role'];
 		}
 	}
 
@@ -39,7 +42,17 @@ class User {
 	// Vloží užívateľa do DB
 	// Používa sa len pri registrácí nového užívateľa
 	public function insertToDb() {
-		Db::query('INSERT INTO user (name, level, food, experience) VALUES (?, ?, ?, ?)', [$this->name, $this->level, $this->food, $this->experience]);
+		Db::query('INSERT INTO user (name, level, food, experience, role) VALUES (?, ?, ?, ?, ?)', [$this->name, $this->level, $this->food, $this->experience, $this->role]);
+	}
+
+	public function costFood($food) {
+		if (($this->food - $food) >= 0) {
+			$this->food -= $food;
+			Db::query('UPDATE user SET food = ? WHERE id = ?',[$this->food, $this->id]);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Nastaví heslo
@@ -64,6 +77,22 @@ class User {
 		return $this->level;
 	}
 
+	// Vráti hodnotu jedla
+	public function getFood() {
+		return $this->food;
+	}
+
+	// Vráti pocet skusenosti
+	public function getExp() {
+		return $this->experience;
+	}
+
+
+	// Vráti rolu
+	public function getRole() {
+		return $this->role;
+	}
+
 	// Vráti všetkých lovcov, ktorý patria akutálnemu užívateľovi
 	public function getMyHunters() {
 		return Db::queryAll('SELECT * FROM hunter WHERE user = ? ORDER BY health DESC', [$this->id]);
@@ -80,8 +109,8 @@ class User {
 	}
 
 	// Vráti všetky stanovištia patriace aktuálnemi uživateľovi
-	public function getMyReports() {
-		return Db::queryAll('SELECT * FROM report WHERE user = ? ORDER BY date DESC', [$this->id]);
+	public function getMyReports($page) {
+		return Db::queryAll('SELECT * FROM report WHERE user = ? ORDER BY date DESC LIMIT ?, 5', [$this->id, ($page-1)*5]);
 	}
 
 	// Vráti meno používateľa podľa zadaného ID, STATIC
@@ -102,12 +131,18 @@ class User {
 		return Db::query('SELECT * FROM hunter WHERE user = ? AND health > ?', [$this->id,0]);		
 	}
 
+	public function reward($food, $experience) {
+		$this->food += $food;
+		$this->experience += $experience;
+		Db::query('UPDATE user SET food = ?, experience = ? WHERE name = ?',[$this->food, $this->experience, $this->name]);
+	}
+
 	// Prepočíta level pouzivatela
 	public function computeLevel() {
 		if ($this->experience > $this->level * 100) {
-			$this->level++;
 			$this->experience -= $this->level * 100;
+			$this->level++;
 		}
-		Db::query('UPDATE user SET food = ?, experience = ? WHERE id = ?',[$this->food, $this->experience, $this->id]);
+		Db::query('UPDATE user SET level = ?, food = ?, experience = ? WHERE id = ?',[$this->level, $this->food, $this->experience, $this->id]);
 	}
 }

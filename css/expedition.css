@@ -1,11 +1,30 @@
 #expeditionReport, #expeditionReport td, #expeditionReport th {	
 	border-collapse: collapse;
-    border: 1px solid black;
+}
+
+#expForm {
+	width: 100%;
+	float:left;
+}
+
+#expCreate {
+	margin: auto;
+	widows: 100%;
+	text-align: center;
 }
 
 #expeditionReport {
 	float:left;
 	text-align: center;
+	width: 30%;
+	border-collapse: collapse;
+	background-color: #c5a37d;
+	border-radius: 25px;
+}
+
+#expeditionReport tr:nth-child(2n) {
+	border-collapse: collapse;
+	background-color: #987d5b;
 }
 
 #expeditionReport td, #expeditionReport th {	
@@ -14,13 +33,21 @@
 
 #expeditionHunter, #expeditionHunter td, #expeditionHunter th {	
 	border-collapse: collapse;
-    border: 1px solid black;
 }
 
 #expeditionHunter {
-	float: left;
+	width: 30%;
+	border-collapse: collapse;
+	background-color: #c5a37d;
+	border-radius: 25px;
 	text-align: center;
-	margin-left: 50px;
+	float: left;
+	margin-left: 5%;
+}
+
+#expeditionHunter tr:nth-child(2n) {
+	border-collapse: collapse;
+	background-color: #987d5b;
 }
 
 #expeditionHunter td, #expeditionHunter th {	
@@ -29,13 +56,21 @@
 
 #pits, #pits td, #pits th {	
 	border-collapse: collapse;
-    border: 1px solid black;
+}
+
+#pits tr:nth-child(2n) {
+	border-collapse: collapse;
+	background-color: #987d5b;
 }
 
 #pits {
-	float: left;
+	width: 30%;
+	border-collapse: collapse;
+	background-color: #c5a37d;
+	border-radius: 25px;
 	text-align: center;
-	margin-left: 50px;
+	float: left;
+	margin-left: 5%;
 }
 
 #pits td, #pits th {	
@@ -43,12 +78,12 @@
 }
 
 #mammoths {
-    border: 1px solid black;
     float: left;
     width: 30%;
+	background-color: #987d5b;
+    border-radius: 25px;
 }
 .mammoth {
-	padding: 3px;
 	float: left;
 	width: 100%;
 	text-align: center;
@@ -57,16 +92,20 @@
 .mammoth img {
 	float: left;
 }
+
 .mammoth p {
 	width: 60%;
 	float: right;
+	margin:0;
+	padding: 0;
 	margin-right: 10px;
 }
 
 #hunters {
-    border: 1px solid black;
     float: right;
     width: 30%;	
+	background-color: #987d5b;
+    border-radius: 25px;
 }
 
 .hunter {
@@ -99,9 +138,24 @@
 #results {
 	margin: auto;
 	width: 28%;
-    border: 1px solid black;
+	background-color: #987d5b;
+    border-radius: 25px;
     padding: 1%;
     text-align: center;	
+}
+
+#results table {
+    border-radius: 25px;
+
+}
+
+#results table, #results td {
+	border-collapse: collapse;
+}
+
+#results tr:nth-child(2n) {
+	border-collapse: collapse;
+	background-color: #c5a37d;
 }
 
 h3 {

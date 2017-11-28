@@ -1,21 +1,67 @@
-<div class="left">
-	<img src="iis/img/outpost.jpg"> 
-	<p>Owner: <?= User::getUserNameById($outpost['user']); ?></p>
-	<p id="outpostName">
-		Name:
-		<form method="POST">
-			<input type="text" name="changeName" value="<?= $outpost['outpost']; ?>">
-			<input type="submit" value="Change Name">
-		</form>	
-	</p>
-	<p>Capacity:  <?= $outpost['capacity']; ?></p>
-	<p>Hunter count:  <?= $outpost['hunterCount']; ?></p>
-	<hr>
-	<?php if (!empty($outpostHunters)) : ?>
+<div class="container">
+	<div class="left">
+		<div class="left">
+			<img src="iis/img/outpost.jpg" class="outpost-img"> 
+			<p>Owner: <?= User::getUserNameById($outpost['user']); ?></p>
+		</div>
+		<div clas="right">
+			<p id="outpostName">
+				Name:
+				<form method="POST">
+					<input type="text" name="changeName" value="<?= $outpost['outpost']; ?>" class="outpost-name-form">
+					<input type="submit" value="Change Name" class="outpost-name-form">
+				</form>
+			 	<span style="font-family: arial; font-size:8px;">*MAX 15 LETTERS*</span>
+			</p>
+		</div>
+		<br>
+		<p class="left">Capacity:  <?= $outpost['capacity']; ?></p>
+		<p class="right">Hunter count:  <?= $outpost['hunterCount']; ?></p>
+		<?php if (!empty($outpostHunters)) : ?>
+			<table id="availableHunters">
+				<tr>
+					<th colspan="4">
+						Hunters at this outpost
+					</th>
+				</tr>
+				<tr>
+					<th>Name</th>
+					<th>Health</th>
+					<th>Ability</th>
+					<th>Available</th>
+				</tr>
+				<?php foreach ($outpostHunters as $hunter):?>
+					<tr>
+						<td><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></td>
+						<td>
+							<?php if ($hunter['health'] < 0) : ?>
+								<img src="iis/img/skull.png" height="10px">
+							<?php else : ?>
+								<?= $hunter['health'] ?>  
+								<img src="iis/img/heal.png" height="15px">					
+							<?php endif; ?>
+						</td>
+						<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
+						<td>
+							<form method="POST">
+								<input type="hidden" name="removeHunter" value="<?= $hunter['id'] ?>">
+								<input type="submit" value="Remove from outpost"/>
+							</form>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</table>
+		<?php else : ?>
+			<table id="availableHunters">
+				<tr><th>This Outpost is empty</th></tr>
+			</table>
+		<?php endif; ?>
+	</div>
+	<div class="right">
 		<table id="availableHunters">
 			<tr>
 				<th colspan="4">
-					Hunters at this outpost
+					My Hunters
 				</th>
 			</tr>
 			<tr>
@@ -24,60 +70,72 @@
 				<th>Ability</th>
 				<th>Available</th>
 			</tr>
-			<?php foreach ($outpostHunters as $hunter):?>
+			<?php foreach ($myHunters as $hunter):?>
 				<tr>
-					<td><?= $hunter['name'] ?></td>
-					<td><?= $hunter['health'] ?></td>
+					<td><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></td>
+					<td>
+						<?php if ($hunter['health'] < 0) : ?>
+							<img src="iis/img/skull.png" height="10px">
+						<?php else : ?>
+							<?= $hunter['health'] ?>  
+							<img src="iis/img/heal.png" height="15px">					
+						<?php endif; ?>
+					</td>
 					<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 					<td>
-					<form method="POST">
-							<input type="hidden" name="removeHunter" value="<?= $hunter['id'] ?>">
-							<input type="submit" value="Remove from this outpost"/>
-						</form>
+						<?php if ($hunter['available'] == 1) : ?>
+							<form method="POST">
+								<input type="hidden" name="hunterId" value="<?= $hunter['id'] ?>">
+								<input type="submit" value="Assign to outpost"/>
+							</form>
+						<?php else : ?>
+							Unavailable
+						<?php endif; ?>
+						
 					</td>
 				</tr>
 			<?php endforeach; ?>
 		</table>
-	<?php else : ?>
-		<table id="availableHunters">
-			<tr><th>This Outpost is empty</th></tr>
-		</table>
-	<?php endif; ?>
+	</div>
 </div>
-<div class="right">
-	<table id="availableHunters">
+<br>
+<div id="outpostHistory">
+	<table>
 		<tr>
 			<th colspan="4">
-				My Hunters
+				Outpost History
 			</th>
 		</tr>
 		<tr>
-			<th>Name</th>
-			<th>Health</th>
-			<th>Ability</th>
-			<th>Available</th>
+			<th>Hunter</th>
+			<th>Since</th>
+			<th>Until</th>
+			<th>Duration</th>
 		</tr>
-		<?php foreach ($myHunters as $hunter):?>
+		<?php foreach($history as $line) : ?>
 			<tr>
-				<td><?= $hunter['name'] ?></td>
+				<td><?= Hunter::getHunterNameById($line['hunterId']) ?></td>
+				<td><?= $line['since'] ?></td>
 				<td>
-					<?= $hunter['health'] ?>  
-					<?php if ($hunter['health'] < 0) : ?>
-						<img src="iis/img/skull.png" height="10px">
-					<?php endif; ?>
-					</td>
-				<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
-				<td>
-					<?php if ($hunter['available'] == 1) : ?>
-						<form method="POST">
-							<input type="hidden" name="hunterId" value="<?= $hunter['id'] ?>">
-							<input type="submit" value="Assign to this outpost"/>
-						</form>
+					<?php if ($line['until'] == null) : ?>
+						Until Now
 					<?php else : ?>
-						Unavailable
+						<?= $line['until']  ?>
+					<?php endif; ?>
+				</td>
+				<td>
+					<?php if ($line['until'] == null) : ?>
+						Still active
+					<?php else : ?>
+						<?= floor((strtotime($line['until']) - strtotime($line['since']))/(3600*24)) ?>
+						days
+						<?= floor((strtotime($line['until']) - strtotime($line['since']))/60%60) ?>
+						minutes
+						<?= (strtotime($line['until']) - strtotime($line['since']))%60 ?>
+						seconds
 					<?php endif; ?>
 					
-				</td>
+				 </td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

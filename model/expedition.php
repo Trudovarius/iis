@@ -42,41 +42,41 @@ class Expedition {
 		Db::query('INSERT INTO expedition_pit (pitId, expeditionId, since, until) VALUES (?, ?, ?, ?)', [$this->pit, $this->id, $this->date, $this->finishTime]);
 
 		foreach ($this->hunters as $hunter) {
-			Db::query('INSERT INTO expedition_member (hunterId, expeditionId, since, until) VALUES (?, ?, ?, ?)', [$hunter, $this->id, $this->date, $this->finishTime]);
+			Db::query('INSERT INTO expedition_member (hunterId, expeditionId, dmg, since, until) VALUES (?, ?, ?, ?, ?)', [$hunter, $this->id, 0, $this->date, $this->finishTime]);
 			Db::query('UPDATE hunter SET available = ? WHERE id = ?',[0, $hunter]);
 		}
 	}
 
 	// Overovanie ci uz nejaka z expedici skoncila
-	public static function check($userId) {
-		$expeditions = Db::queryAll('SELECT * FROM expedition WHERE user = ?', [$userId]);
+	public static function check($user) {
+		$expeditions = Db::queryAll('SELECT * FROM expedition WHERE user = ?', [$user->getId()]);
 
 		foreach($expeditions as $expedition) {
 			if ( ($expedition['finishTime'] < date('Y-m-d H:i:s')) && ($expedition['status'] != "Finished")) {
 				$expObj = new Expedition(0,$expedition);
-				$expObj->finish();
+				$expObj->finish($user);
 			}
 		}
 	}
 
 	// Spracuje ukoncenie vypravy
-	public function finish() {
+	public function finish($user) {
 		$report = Db::queryOne('SELECT * FROM report WHERE id = ?', [$this->report]);
 		$mammoths = Db::queryAll('SELECT * FROM mammoth JOIN record ON mammoth.id=record.mammothId WHERE reportId = ?', [$report['id']]);
 		$pit = Db::queryOne('SELECT * FROM pit JOIN expedition_pit ON pit.id=expedition_pit.pitId WHERE expeditionId = ?', [$this->id]);
 		$hunters = Db::queryAll('SELECT * FROM hunter JOIN expedition_member ON hunter.id=expedition_member.hunterId WHERE expedition_member.expeditionId = ?', [$this->id]);
 
 		$success = 0;
-		$food = 0;
-		$experience = 0;
+		$this->food = 0;
+		$this->experience = 0;
 		// Simulacia suboja
 		// Ak zomrie aspoň 1 mamut, expedicia je uspesna
 		foreach ($mammoths as $mammoth) { // Simulacia mamutov
 			$rngesus = rand(0,100);
 			if ($rngesus > 25) { // Smrť mamuta
 				$success = 1;
-				$food += 100;
-				$experience += 50;
+				$this->food += 100;
+				$this->experience += 50;
 				// Urcenie ktory lovec zabil mamuta
 				Mammoth::kill($mammoth['id'], $pit['id'], $hunters[rand(0,sizeof($hunters)-1)]['id'], $this->finishTime);
 				Pit::setDeadMammoths($pit['id'], $pit['deadMammoths']);
@@ -86,7 +86,7 @@ class Expedition {
 		foreach ($hunters as $hunter) {
 			$rngesus = rand(0,125);
 			$hunter['health'] -= $rngesus;
-			$experience += $rngesus;
+			$this->experience += $rngesus;
 			if ($hunter['health'] <= 0) { // Smrť lovca
 				$hunter['available'] = 0;
 				Hunter::kill($hunter['id'], $mammoths[rand(0,sizeof($mammoths)-1)]['id'], $pit['id'], $this->finishTime);
@@ -94,12 +94,13 @@ class Expedition {
 				$hunter['available'] = 1;
 			}
 			Hunter::update($hunter);
+			Db::query('UPDATE expedition_member SET dmg = ? WHERE hunterId = ? AND expeditionId = ?', [$rngesus, $hunter['id'], $this->id]);
 		}
 
 		Pit::setAvailable($pit['id']);
 		Db::query('UPDATE report SET completion = ? WHERE id = ?', [1, $this->report]);
-		Db::query('UPDATE user SET food = ?, experience = ? WHERE name = ?',[$food, $experience, $_SESSION['user']]);
-		echo $food . $experience;
+		$user->reward($this->food, $this->experience);
+		$user->computeLevel();
 		$this->status = "Finished";
 		$this->success = $success;
 		$this->update();

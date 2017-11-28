@@ -25,6 +25,18 @@ class Hunter {
 		return Db::queryAll('SELECT * FROM hunter');
 	}
 
+	// Zvysi pocet zivotov
+	public static function heal($hp, $hunterId) {
+		$hunter = Db::queryOne('SELECT * FROM hunter WHERE id = ?',[$hunterId]);
+		$hunter['health'] += $hp;
+		Db::query('UPDATE hunter SET health = ? WHERE id = ?',[$hunter['health'], $hunterId]);
+	}
+
+	// Zvysi pocet zivotov
+	public static function revive($hunterId) {
+		Db::query('UPDATE hunter SET health = ?, available = ? WHERE id = ?',[1, 1, $hunterId]);
+	}
+
 	// Nastavi stanoviste
 	public static function setOutpost($hunterId, $outpostId) {
 		Db::query('INSERT INTO outpost_member (hunterId, outpostId, since, until) VALUES (?, ?, ?, ?)',[$hunterId, $outpostId, date('Y-m-d H:i:s'), ""]);
@@ -48,5 +60,29 @@ class Hunter {
 	// Aktualizovanie udajov o lovcovi
 	public static function update($hunter) {
 		Db::query('UPDATE hunter SET health = ?, available = ? WHERE id = ?', [$hunter['health'], $hunter['available'], $hunter['id']]);
+	}
+
+	public static function getHunterNameById($id) {
+		return Db::querySingle('SELECT name FROM hunter WHERE id =?', [$id]);
+	}
+
+	public static function getHunterById($id) {
+		return Db::queryOne('SELECT * FROM hunter WHERE id = ?', [$id]);
+	}
+
+	public static function getKills($id, $page) {
+		return Db::queryAll('SELECT * FROM murder LEFT JOIN mammoth ON mammoth.id=murder.mammothId WHERE hunterId = ? AND type = ? LIMIT ?,4',[$id,1,($page-1)*4]);
+	}
+
+	public static function getOutpost($id) {
+		return Db::querySingle('SELECT outpostId FROM outpost_member WHERE hunterId = ? AND until = ?',[$id, ""]);
+	}
+
+	public static function getExpedition($id) {
+		return Db::querySingle('SELECT expeditionId FROM expedition_member WHERE hunterId = ? AND until >= ?',[$id,date('Y-m-d H:i:s')]);
+	}
+
+	public static function getExpeditions($id) {
+		return Db::queryAll('SELECT * FROM expedition_member LEFT JOIN expedition ON expedition.id=expedition_member.expeditionId WHERE hunterId = ? ORDER BY since DESC LIMIT 4',[$id]);
 	}
 }

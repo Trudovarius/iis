@@ -24,6 +24,11 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 
+if (isset($_SESSION['admin']) && (time() - $_SESSION['admin'] > 360)) {
+    session_unset($_SESSION['admin']);
+}
+$_SESSION['admin'] = time();
+
 // Nastavení interního kódování pro funkce pro práci s řetězci
 mb_internal_encoding("UTF-8");
 

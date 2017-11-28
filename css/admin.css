@@ -1,0 +1,26 @@
+#users {
+	text-align: center;
+	width: 100%;
+	background-color: #c5a37d;
+	border-radius: 25px;
+}
+
+#users table {
+	border-collapse: collapse;
+	widows: 100%;
+	text-align: center;
+}
+
+#users tr {
+	width: 98%;
+	padding: 1%;
+}
+
+#users td, #users th {
+	width: 12%;
+}
+
+#users input {
+	text-align: center;
+	width: 100px;
+}

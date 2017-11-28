@@ -1,0 +1,20 @@
+#userDetail {
+	width: 100%;
+}
+
+#userDetail table {
+	text-align: center;
+	width: 100%;
+	border-collapse: collapse;
+	background-color: #c5a37d;
+	border-radius: 25px;
+}
+
+#userDetail th, #userDetail td {
+	widows: 33.33%;
+}
+
+#userDetail tr:nth-child(2n) {
+	border-collapse: collapse;
+	background-color: #987d5b;
+}

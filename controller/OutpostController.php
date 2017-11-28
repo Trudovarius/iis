@@ -14,8 +14,7 @@ class OutpostController extends Controller
             $this->header['keywords'] = ["iis", "outpost"];
 
             // Overenie ci uz nejaka expedicia skoncila
-            Expedition::check($user->getId());
-            $user->computeLevel();
+            Expedition::check($user);
 
             if (isset($parameters[0])) {
                 if ($parameters[0] == 'detail') {
@@ -30,7 +29,7 @@ class OutpostController extends Controller
                     $this->data['myHunters'] = $user->getMyHunters();
                     $this->data['outpostHunters'] = Outpost::getHuntersByOutpostId($outpost['id']);
 
-
+                    $this->data['history'] = Outpost::getHistory($outpost['id']);
 
                     // Spracovanie formulára
                     // Overenie či je v stanovišti dostatok miesta

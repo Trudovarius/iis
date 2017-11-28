@@ -2,7 +2,8 @@
 
 class LogoutController extends Controller
 {
-	public function handle($parameters) {
+	public function handle($parameters)
+	{
 		unset($_SESSION['user']);
 		session_destroy();
 
