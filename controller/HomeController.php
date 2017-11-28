@@ -39,9 +39,10 @@ class HomeController extends Controller
     		$this->data['pits'] = $pits;
 
     		// Overenie ci uz nejaka expedicia skoncila
-    		Expedition::check($user->getId());
-    		$user->computeLevel();
+    		Expedition::check($user);
 
+    		$expInProgress = Db::queryAll('SELECT * FROM expedition WHERE user = ? AND status = ?', [$user->getId(), "In progress"]);
+    		$this->data['expInProgress'] = $expInProgress;
 
 	    	// Generovanie hlaseni o mamutoch
 	    	// Vzdy budu aspon 2 nevybavene hlasenia
@@ -54,7 +55,12 @@ class HomeController extends Controller
 	    	}
 
 	    	// Vrati vsetky hlasenia z DB
-	    	$this->data['reports'] = $user->getMyReports();
+	    	if (isset($_GET['page']))
+	    		$this->data['reports'] = $user->getMyReports($_GET['page']);
+	    	else {
+	    		$_GET['page'] = 1;
+	    		$this->data['reports'] = $user->getMyReports(1);
+	    	}
 		}
 
 		// Nastavení hlavní šablony

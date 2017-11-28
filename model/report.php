@@ -10,13 +10,14 @@ class Report {
 
 	// TO DO
 	public static function createNew($user) {
+		$outpost = Outpost::getActiveOutpost($user);
 		$report = new Report();
 		$report->id = uniqid(); 
 		$report->user = $user;
-		$report->outpost = Outpost::getActiveOutpost($user)['id'];
-		$report->date = date('Y-m-d H:i:s');
+		$report->outpost = $outpost['id'];
+		$report->date = date('Y-m-d H:i:s', time() - rand(1,180) );
 		$report->completion = 0;
-		$report->mammothCount = rand(1,3);
+		$report->mammothCount = rand(1,2+$outpost['hunterCount']);
 
 		$report->insertToDb();
 

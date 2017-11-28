@@ -57,6 +57,10 @@ class RouterController extends Controller
 		$this->data['title'] = $this->controller->header['title'];
 		$this->data['decsription'] = $this->controller->header['description'];
 		$this->data['keywords'] = $this->controller->header['keywords'];
+
+		if (isLoggedIn()) {
+			$this->data['user'] = new User($_SESSION['user']);
+		}
 		
 		// Nastavení hlavní šablony
 		$this->view = 'template';

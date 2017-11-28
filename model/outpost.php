@@ -61,5 +61,9 @@ class Outpost {
 		return false;
 	}
 
+	public static function getHistory($outpostId) {
+		return Db::queryAll('SELECT * FROM outpost_member WHERE outpostId = ? ORDER BY since DESC LIMIT 5',[$outpostId]);
+	}
+
 
 }

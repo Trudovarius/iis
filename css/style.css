@@ -19,21 +19,27 @@ html {
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	font-family: 'Crayon Hand', Arial, sans-serif;
+	font-weight:normal;
+	font-style:normal;
+	text-shadow: none;
 }
 
 body{
-	background-color: brown;
 	width: 100%;
 	margin: 0;
 	padding: 0;
 	min-height: 100%;
 	float: left;
+	background-image: url('../img/bg.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed; 
 }
 
 header {
 	width: 100%;
 	height: 50px;
-	background-color: white;
 	margin: 0;
 	padding: 0;
 	float: left;
@@ -44,18 +50,23 @@ article {
 	padding: 2%;
 	width: 96%;
 	min-height: 200px;
-	text-shadow: 3px 3px 3px #aaaaaa;
-	background-color: green;
 	float: left;
+
 }
 
 footer {
-	width: 90%;
+	width: 100%;
 	font-size: 11px;
 	text-align: center;
-	padding: 5%;
-	background-color: red;
 	float: left;
+	margin: 0;
+}
+
+footer .center  {	
+    background-color: #302722;
+    color: white;
+	padding-top: 1px;
+	padding-bottom: 1px;
 }
 
 .center {
@@ -67,4 +78,18 @@ footer {
 h1 {
 	margin: 0;
 	text-align: center;
+}
+
+@font-face {
+	font-family: "Crayon Hand";
+	src: url("font/CrayonHandRegular2016Demo.ttf");
+	src: url("font/crayonhandregular2016demo-webfont.woff") format("woff");
+}
+
+a:hover {
+	color:blue;
+}
+
+a, a:visited {
+	color: white;
 }

@@ -1,0 +1,48 @@
+<h1>Control Panel</h1>
+<div id="users">
+	<table >
+		<tr>
+			<th>ID</th>
+			<th>User</th>
+			<th>Level</th>
+			<th>Food</th>
+			<th>Experience</th>
+			<th>Role</th>
+			<th>Save Changes</th>
+			<th>Delete</th>
+		</tr>
+		<?php foreach ($users as $user) : ?>
+			<tr>
+				<form method="POST">
+					<input type="hidden" name="change" value="true">	
+					<td><input type="text" name="id" value="<?= $user['id']?>" readonly></td>
+					<td><input type="text" name="name" value="<?= $user['name']?>" required></td>
+					<td><input type="text" name="level" value="<?= $user['level']?>" required></td>
+					<td><input type="text" name="food" value="<?= $user['food']?>" required></td>
+					<td><input type="text" name="experience" value="<?= $user['experience']?>" required></td>
+					<th>
+						<select name="role">
+							<?php if ($user['role'] == 'user') : ?>
+							<option value="user" name="role" value="user" selected>user</option>
+							<option value="admin" name="role" value="admin">admin</option>
+							<?php else : ?>
+							<option value="user" name="role" value="user">user</option>
+							<option value="admin" name="role" value="admin" selected>admin</option>
+							<?php endif; ?>
+						</select>
+					</th>
+					<th><input type="submit" value="Save Changes"></th>
+				</form>
+					<th>
+						<form method="POST">
+							<input type="hidden" name="delete" value="<?= $user['id'] ?>">
+							<input type="submit" value="DELETE">
+						</form>
+					</th>
+			</tr>
+		<?php endforeach; ?>
+		<tr>
+			<td colspan="8">...</td>
+		</tr>
+	</table>
+</div>

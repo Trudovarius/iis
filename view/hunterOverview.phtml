@@ -1,9 +1,22 @@
 <h1>Hunters</h1>
+<?php if (isset($error)) : ?>
+	<div id="errorMsg">
+		<?= $error ?>
+	</div>
+<?php endif;?>
 <table id="myHunters">
 	<tr>
 		<th colspan="4">
 			My Hunters
 		</th>
+	</tr>
+	<tr>
+		<td colspan="4">
+			You can heal hunters with low health by clicking on the 
+			<img src="iis/img/heal.png" height="15px">
+			<br>
+			Healing costs food: 1hp for 1 food
+		</dh>
 	</tr>
 	<tr>
 		<th>Name</th>
@@ -13,13 +26,26 @@
 	</tr>
 	<?php foreach ($myHunters as $hunter):?>
 		<tr>
-			<td><?= $hunter['name'] ?></td>
+			<td><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></td>
 			<td>
-				<?= $hunter['health'] ?>  
-				<?php if ($hunter['health'] < 0) : ?>
-					<img src="iis/img/skull.png" height="10px">
+				<?php if ($hunter['health'] <= 0) : ?>
+					<form method="POST" id="revive-<?= $hunter['id'] ?>" >
+						<input type="hidden" name="reviveId" value="<?= $hunter['id'] ?>">
+						<img src="iis/img/skull.png" height="10px" onclick="revive('<?= $hunter['name'] ?>','<?= $hunter['id'] ?>')">
+					</form>
+				<?php else : ?>
+					<?= $hunter['health'] ?>  
+					<img src="iis/img/heal.png" height="15px" onclick="heal(<?= $hunter['id'] ?>)">
+					<div id="heal-<?= $hunter['id'] ?>" class="heal">
+						<a onclick="healHide(<?= $hunter['id'] ?>)">X</a>
+						<form method="POST">
+							<input type="hidden" name="hunterId" value="<?= $hunter['id'] ?>">
+							<input type="number" name="heal" value="0">
+							<input type="submit" value="Heal"> 
+						</form>
+					</div>
 				<?php endif; ?>
-				</td>
+			</td>
 			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 			<td>
 				<?php if ($hunter['available'] == 1) : ?>
@@ -31,6 +57,13 @@
 			</td>
 		</tr>
 	<?php endforeach; ?>
+	<tr>
+		<td colspan="4">
+			Click on the 
+			<img src="iis/img/skull.png" height="10px"> 
+			to ressurect a hunter (Cost 1000 food)
+		</td>
+	</tr>
 </table>
 
 <table id="allHunters">
@@ -47,12 +80,23 @@
 	</tr>
 	<?php foreach ($allHunters as $hunter):?>
 		<tr>
-			<td><?= User::getUserNameById($hunter['user']); ?></td>
-			<td><?= $hunter['name'] ?></td>
+			<td><a href="iis/user/detail/<?= $hunter['user']?>"><?= User::getUserNameById($hunter['user']); ?></a></td>
+			<td><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></td>
 			<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
 			<td>
 				<?= $hunter['kills'] ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>
+	<tr>
+		<th colspan="5">
+			<?php if ($_GET['page'] != 1) : ?>
+				<a href="iis/hunter/overview?page=<?= $_GET['page'] - 1 ?>"><</a>
+			<?php endif; ?>
+			<?= $_GET['page'] ?>
+			<?php if (sizeof($allHunters) % 8 == 0) : ?>
+				<a href="iis/hunter/overview?page=<?= $_GET['page'] + 1 ?>">></a>
+			<?php endif; ?>
+		</th>
+	</tr>
 </table>
