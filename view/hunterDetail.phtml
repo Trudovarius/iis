@@ -1,7 +1,7 @@
 <h1><?= $hunter['name']?></h1>
 <div id="hunterDetail">
 	<div id="hunterDetailImg">
-		<img src="iis/img/hunter.png">
+		<img src="<?= url('img/hunter.png') ?>">
 	</div>
 	<table>
 		<tr>
@@ -23,9 +23,9 @@
 					Available
 				<?php else : ?>
 					<?php if (!empty($expedition)) : ?>
-						<a href="iis/expedition/detail/<?= $expedition ?>">At expedition</a>
+						<a href="<?= url('expedition/detail/'.$expedition) ?>">At expedition</a>
 					<?php elseif (!empty($outpost)) : ?>
-						<a href="iis/outpost/detail/<?= $outpost ?>">At outpost</a>
+						<a href="<?= url('outpost/detail/'.$outpost) ?>">At outpost</a>
 					<?php else : ?>
 						Unavailable
 					<?php endif; ?>
@@ -53,11 +53,11 @@
 		<tr>
 		<th colspan="53">
 			<?php if ($_GET['page'] != 1) : ?>
-				<a href="iis/hunter/detail/<?= $kill['hunterId'] ?>?page=<?= $_GET['page'] - 1 ?>"><</a>
+				<a href="<?= url('hunter/detail/'.$kill['hunterId'].'?page='.($_GET['page'] - 1)) ?>"><</a>
 			<?php endif; ?>
 			<?= $_GET['page'] ?>
 			<?php if (sizeof($kills)%4 == 0) : ?>
-				<a href="iis/hunter/detail/<?= $kill['hunterId'] ?>?page=<?= $_GET['page'] + 1 ?>">></a>
+				<a href="<?= url('hunter/detail/'.$kill['hunterId'].'?page='.($_GET['page'] + 1)) ?>">></a>
 			<?php endif; ?>
 		</th>
 	</tr>
@@ -73,7 +73,7 @@
 		<?php foreach ($expeditions as $exp) : ?>
 			<tr>
 				<td><?= $exp['date'] ?></td>
-				<td><a href="iis/expedition/detail/<?= $exp['id'] ?>">Expedition Detail</a></td>
+				<td><a href="<?= url('expedition/detail/'.$exp['id']) ?>">Expedition Detail</a></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

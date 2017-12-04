@@ -3,7 +3,7 @@
 	<h3>Target mammoths</h3>
 	<?php foreach ($mammoths as $mammoth) : ?>
 		<div class="mammoth">
-			<img src="iis/img/mammoth.png" height="70px">
+			<img src="<?= url('img/mammoth.png') ?>" height="70px">
 			<p><?= $mammoth['properties'] . ' ' . $mammoth['gender'] ?></p>
 			<p><?=  $mammoth['sign'] ?></p>
 		</div>
@@ -14,8 +14,8 @@
 	<?php foreach ($hunters as $hunter) : ?>
 		<div class="hunter">
 			<div>
-				<img src="iis/img/hunter.png" height="70px">
-				<p class="hunterName"><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></p>
+				<img src="<?= url('img/hunter.png') ?>" height="70px">
+				<p class="hunterName"><a href="<?= url('hunter/detail/'.$hunter['id']) ?>"><?= $hunter['name'] ?></a></p>
 				<p class="hunterInfo"><?= $hunter['health'] . 'hp, ' . Ability::getAbilityName($hunter['ability']) ?></p>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 				<td><?= $report['mammothCount']*10 . 'min' ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><a href="iis/outpost/detail/<?= $report['outpost'] ?>">Outpost</a></td>
+				<td colspan="2"><a href="<?= url('outpost/detail/'.$report['outpost']) ?>">Outpost</a></td>
 			</tr>
 			<?php foreach ($hunters as $hunter) : ?>
 				<tr>
@@ -77,9 +77,9 @@
 				<?php if ($murder['type'] == 1) : ?>
 					<hr>
 					<div class="murder">
-						<img src="iis/img/hunter.png" height="20px">
+						<img src="<?= url('img/hunter.png') ?>" height="20px">
 						<?= $murder['name'] ?> killed <?= $murder['properties'] . ' ' . $murder['gender'] ?>
-						<img src="iis/img/mammoth.png" height="20px">
+						<img src="<?= url('img/mammoth.png') ?>" height="20px">
 					</div>
 				<?php endif; ?> 
 			<?php endforeach; ?>
@@ -87,9 +87,9 @@
 				<?php if ($murder['type'] == 0) : ?>
 					<hr>
 					<div class="murder">
-						<img src="iis/img/mammoth.png" height="20px">
+						<img src="<?= url('img/mammoth.png') ?>" height="20px">
 						<?= ucfirst($murder['properties']) . ' ' . $murder['gender'] ?> killed <?= $murder['name'] ?>
-						<img src="iis/img/hunter.png" height="20px">
+						<img src="<?= url('img/hunter.png') ?>" height="20px">
 					</div>
 				<?php endif; ?> 
 			<?php endforeach; ?>

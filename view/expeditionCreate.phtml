@@ -9,7 +9,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <img src="iis/img/outpost.jpg">
+                    <img src="<?= url('img/outpost.jpg') ?>">
                 </td>
             </tr>
             <tr>
@@ -57,7 +57,7 @@
                     <?php foreach($pits as $pit) : ?>
                         <?php if ($pit['available']) : ?>
                             <tr>
-                                <td><img src="iis/img/pit.jpg" width="70" height="70"></td>
+                                <td><img src="<?= url('img/pit.jpg') ?>" width="70" height="70"></td>
                                 <td><?= $pit['id'] ?></td>
                                 <td>
                                     <input type="radio" name="pitId" value="<?= $pit['id'] ?>" required>

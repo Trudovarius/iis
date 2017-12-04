@@ -7,6 +7,6 @@ class LogoutController extends Controller
 		unset($_SESSION['user']);
 		session_destroy();
 
-		$this->redirect('iis/home');
+		$this->redirect('home');
 	}
 }

@@ -24,10 +24,13 @@ class HomeController extends Controller
 			$user = new User($_SESSION['user']);
 			$user->setId();
 
-
-			// V prípade, že užívateľ nemá žiadneho lovca, presmerovanie a vytvorenie nového lovca
-	    	if (!hasHunter($user->getId())) {
-	    		$this->redirect('iis/hunter/create');
+			// V prípade, že užívateľ nemá žiadneho živého lovca lovca, presmerovanie a vytvorenie nového lovca
+	    	if ($user->getMyHuntersCount() == 0) {
+	    		if (sizeof($user->getMyHunters()) != 0)
+					$this->redirect('hunter/create');
+    			else {
+	    			$this->redirect('hunter/create/init');
+    			}
 	    	}
 
 	    	// Ziskanie informacii o stanovistiach z db
@@ -49,7 +52,7 @@ class HomeController extends Controller
 	    	if (activeOutposts($outposts)) {
 	    		$i = hasReport($user->getId());
 	    		if (!$i) {
-	    			for (; $i < 2; $i++)
+	    			for (; $i < 2 + floor($user->getLevel()/5); $i++)
 	    				Report::createNew($user->getId());
 	    		}
 	    	}
@@ -93,5 +96,7 @@ class HomeController extends Controller
 	    
 	    // Generovanie stanovosti
 	    $user->initOutposts();
+
+        $this->data['error'] = $_POST['name'] . " has been registered successfully!";
     }
 }
