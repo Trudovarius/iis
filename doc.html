@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Projekt IIS</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid black;
+            padding: 0.3em 0.5em;
+            text-align: left;
+        }
+
+        dt {
+            font-weight: bold;
+            margin-top: 0.5em;
+        }
+
+        .inline {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu
+     podle použitého editoru -->
+
+    <h1>Lovci mamutů</h1>
+    <!-- Nahradte názvem svého zadání -->
+
+    <dl>
+        <dt>Autoři</dt>
+        <dd>Rudolf Kučera
+            <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+            <a href="mailto:xkucer91@stud.fit.vutbr.cz">xkucer91@stud.fit.vutbr.cz</a> - Činnosť na celom projekte
+        </dd>
+        <dd>Dominik Drdák
+            <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+            <a href="mailto:xdrdak01@stud.fit.vutbr.cz">xdrdak01@stud.fit.vutbr.cz</a> - Činnost na celom projekte
+        </dd>
+        <dt>URL aplikace</dt>
+        <dd><a href="http://iislovci.tk">http://iislovci.tk</a></dd>
+    </dl>
+
+    <h2>Uživatelé systému pro testování</h2>
+    <p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+    <table>
+        <tr>
+            <th>Login</th>
+            <th>Heslo</th>
+            <th>Role</th>
+        </tr>
+        <tr>
+            <td>admin</td>
+            <td>admin</td>
+            <td>Správca - prístup ku kontrolnému panelu, kde môže užívateľom nastavovať práva, meniť login, level, suroviny, skúsenosti, prípadne užívateľa zmazať. <b>Poznámka:</b> do tohto módu sa dá prisupiť kliknutím na link v pätičke webstránky <a href="http://iislovci.tk/iis/home">http://iislovci.tk/iis/home</a> alebo priamo linkom <a href="http://iislovci.tk/iis/admin/login">http://iislovci.tk/iis/admin/login</a> a prihlásenim sa.</td>
+        </tr>
+        <tr>
+            <td>Admin</td>
+            <td>admin1</td>
+            <td>Užívateľ so správcovskými právami - vie sa dostať ku kontrolnému panelu po bežnom prihlásení kliknutím na link v pätičke, má aj všetky možnosti užívateľa.</td>
+        </tr>
+        <tr>
+            <td>Trudo</td>
+            <td>1234</td>
+            <td>Užívateľ - vie vytvárať lovcov, pridelovať lovcov ku hliadkám, vysielať expedície a spravovať lovcov.</td>
+        </tr>
+    </table>
+
+    <h2>Implementace</h2>
+    <p>Stručná dokumentace k implementaci, která popisuje, které PHP skripty implementují jednotlivé případy použití uvedené v use-case diagramu z IDS. V případě, že bylo nutno při implementaci učinit změny v návrhu, musí být v dokumentaci zdůvodněny.</p>
+    <h3>Správca</h3>
+    <ul>
+        <li>Možnosť menení práv účtov, menenia loginov, menenia levelu, skúseností a surovín užívateľa, možnosť zmazania účtu. (AdminController.php)</li>
+    </ul>
+    <h3>Užívateľ</h3>
+    <ul>
+        <li>Možnosť priraďovať členov k hliadkám, menenie členov hliadky. (OutpostController.php, hunter.php)</li>
+        <li>Vysielanie výprav, priraďovanie lovcov k výpravam. (ExpeditionController.php, expedition.php)</li>
+        <li>Prijímanie správ od hliadok o možných expedíciach. (HomeController.php, report.php)</li>
+        <li>Menenie obsadenosti lovca, obsadenosť sa mení pri pridelení lovca do hliadky/k expedícií. (outpost.php/expedition.php)</li>
+        <li>Dostupnosť mamutej jamy. (expedition.php, ExpeditionController.php)</li>
+		<li>Vytváranie a liečenie lovcov. (hunter.php, HunterController.php)</li>
+		<br>
+		<b>Bez možnosti zásahu užívateľa:</b>
+		<li>Generovanie mamutov. (mammoth.php)</li>
+		<li>Rozhodovanie o výsledkoch expedície, prijímanie správ o dokončených expedíciách, aktualizovanie steny. (expedition.php, HomeController.php, report.php)</li>
+    </ul>
+
+    <h2>Instalace</h2>
+    <ul>
+        <li>Potrebujeme PHP Version 5.6.31</li>
+		<li>1. Presunieme priečinok so súbormi na server.</li>
+		<li>2. Importujeme databázu iis.sql</li>
+		<li>3. Nastavíme pripojenie k databáze v súbore index.php.</li>
+    </ul>
+
+    <h2>Známé problémy</h2>
+    <p>Menšie bugy v hre, ktoré neovplyvňujú hlavnú funkciu systému.
+	<br>
+	<b>Pozmenenie zadania oproti IDS:</b> Use-case z IDS bol použitý ako súčasť implementácie užívateľa a rozhrania systému. Systém bol rozšírený a spravený v štýle internetovej hry na základe rozhodnutia autorov projektu, kde k rozhodnutiu viedla väčšia možnosť využitia v reálnom svete a možnosť porovnávania s podobnými informačnými systémami, pričom základný princíp projektu ostáva rovnaký. 	
+	</p>
+
+</body>
+
+</html>
