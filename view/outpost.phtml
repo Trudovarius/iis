@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="left">
 		<div class="left">
-			<img src="iis/img/outpost.jpg" class="outpost-img"> 
+			<img src="<?= url('img/outpost.jpg') ?>" class="outpost-img"> 
 			<p>Owner: <?= User::getUserNameById($outpost['user']); ?></p>
 		</div>
 		<div clas="right">
@@ -32,13 +32,13 @@
 				</tr>
 				<?php foreach ($outpostHunters as $hunter):?>
 					<tr>
-						<td><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></td>
+						<td><a href="<?= url('hunter/detail/'. $hunter['id']) ?>"><?= $hunter['name'] ?></a></td>
 						<td>
 							<?php if ($hunter['health'] < 0) : ?>
-								<img src="iis/img/skull.png" height="10px">
+								<img src="<?= url('img/skull.png') ?>" height="10px">
 							<?php else : ?>
 								<?= $hunter['health'] ?>  
-								<img src="iis/img/heal.png" height="15px">					
+								<img src="<?= url('img/heal.png') ?>" height="15px">					
 							<?php endif; ?>
 						</td>
 						<td><?= Ability::getAbilityName($hunter['ability']) ?></td>
@@ -72,13 +72,13 @@
 			</tr>
 			<?php foreach ($myHunters as $hunter):?>
 				<tr>
-					<td><a href="iis/hunter/detail/<?= $hunter['id'] ?>"><?= $hunter['name'] ?></a></td>
+					<td><a href="<?= url('hunter/detail/'.$hunter['id']) ?>"><?= $hunter['name'] ?></a></td>
 					<td>
 						<?php if ($hunter['health'] < 0) : ?>
-							<img src="iis/img/skull.png" height="10px">
+							<img src="<?= url('img/skull.png') ?>" height="10px">
 						<?php else : ?>
 							<?= $hunter['health'] ?>  
-							<img src="iis/img/heal.png" height="15px">					
+							<img src="<?= url('img/heal.png') ?>"" height="15px">					
 						<?php endif; ?>
 					</td>
 					<td><?= Ability::getAbilityName($hunter['ability']) ?></td>

@@ -27,7 +27,7 @@ class AdminController extends Controller
 	 	if (!empty($_POST)) {
 	 		if ($_POST['name'] == 'admin' && $_POST['password'] == 'admin') {
 	 			$_SESSION['admin'] = time();
- 				$this->redirect('iis/admin/controlPanel');
+ 				$this->redirect('admin/controlPanel');
 	 		}
 	 	}
 	}
@@ -38,11 +38,11 @@ class AdminController extends Controller
 	 	if (isLoggedIn()) {
 			$user = new User($_SESSION['user']);
 			if ($user->getRole() != 'admin')
-	 			$this->redirect('iis/home');
+	 			$this->redirect('home');
 	 	}
 
 	 	if (!isset($_SESSION['admin']))
-	 		$this->redirect('iis/home');
+	 		$this->redirect('home');
 
 	 	if (isset($_POST['change'])) {
 	 		Db::query('UPDATE user SET id = ?, name = ?, level = ?, food = ?, experience = ?, role = ? WHERE id = ?',[$_POST['id'], $_POST['name'], $_POST['level'], $_POST['food'], $_POST['experience'], $_POST['role'], $_POST['id']]);

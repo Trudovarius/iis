@@ -2,10 +2,7 @@
 
 // Je v DB lovec ktorý patrí užívateľovi s daným ID?
 function hasHunter($id) {
-	if (Db::query('SELECT * FROM hunter WHERE user = ? AND health > ?', [$id, 0]) == 0)
-		return false;
-	else
-		return true;
+	return Db::query('SELECT * FROM hunter WHERE user = ?', [$id]);
 }
 
 // Je v DB stanoviste patriacemu uzivatelovi s danym ID?
@@ -42,4 +39,8 @@ function activeOutposts($outposts) {
 			return true;
 	}
 	return false;
+}
+
+function url($url) {
+	return Controller::$url . $url;
 }

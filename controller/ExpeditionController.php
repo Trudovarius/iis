@@ -10,7 +10,7 @@ class ExpeditionController extends Controller
         $this->header['keywords'] = ["iis", "expedition", "kill", "mammoths"];
 
         if (!isLoggedIn()) {
-	       $this->redirect('iis/error');
+	       $this->redirect('error');
         } else {
             if (isset($parameters[0]) && $parameters[0] == 'create') {
                 $this->create();
@@ -37,7 +37,7 @@ class ExpeditionController extends Controller
                 $expedition->setFinishTime(Report::getReportById($_POST['report'])['mammothCount']);
                 $expedition->insertToDb();
 
-                $this->redirect('iis/home');
+                $this->redirect('home');
             }
 
             $this->data['report'] = Report::getReportById($_POST['report']);
@@ -45,7 +45,7 @@ class ExpeditionController extends Controller
             $this->data['pits'] = $user->getMyPits();
 
         } else {
-            $this->redirect('iis/home');
+            $this->redirect('home');
         }
         $this->view = 'expeditionCreate';
     }

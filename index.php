@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+date_default_timezone_set('Europe/Bratislava');
 /*
  *	       __          __                __            
  *	  ____/ /__ _   __/ /_  ____  ____  / /__ _________

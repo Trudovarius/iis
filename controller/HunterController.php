@@ -6,7 +6,7 @@ class HunterController extends Controller
     {
     	// Pokud neni prihlaseny uzivatel, nema pristup k zadnemu z lovcu
     	if (!isLoggedIn()) {
-    		$this->redirect('iis/error');
+    		$this->redirect('error');
     	} else {
 			$user = new User($_SESSION['user']);
 			$user->setId();
@@ -18,7 +18,10 @@ class HunterController extends Controller
     	if (isset($parameters)) {
     		// VYTVORENIE NOVEHO LOVCA
     		if ($parameters[0] == 'create') {
-				$this->create($parameters, $user);
+                if (isset($parameters[1]) && ($parameters[1] == 'init'))
+				    $this->create($parameters, $user,'init');
+                else 
+                    $this->create($parameters, $user);
     		// PREHLAD LOVCOV
     		} else if ($parameters[0] == 'overview') {
 				$this->overview($parameters,$user);
@@ -50,13 +53,15 @@ class HunterController extends Controller
         $this->view = 'hunterDetail';
     }
 
-    public function create($parameters, $user) {
+    public function create($parameters, $user, $init = null) {
         // Nastavení proměnných pro šablonu
         $this->header['title'] = "IIS Create Hunter";
         $this->header['description'] = "Create your hunter";
         $this->header['keywords'] = ["iis", "create", "hunter", "start"];
 
         $this->view = 'hunterCreate';
+
+        $this->data['init'] = $init;
 
         $this->data['abilities'] = Ability::getAllAbilities();
 
@@ -71,9 +76,9 @@ class HunterController extends Controller
 
             // Na začiatku si každý vytvorí 4 lovcov
             if ($user->getMyHuntersCount() == $user->getLevel()+3)
-                $this->redirect('iis/hunter/overview');
+                $this->redirect('hunter/overview');
             else
-                $this->redirect('iis/hunter/create');
+                $this->redirect('hunter/create');
         }
     }
 

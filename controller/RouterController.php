@@ -38,7 +38,7 @@ class RouterController extends Controller
 				
 
 		if (empty($parsedURL[1]))		
-			$this->redirect('iis/home');
+			$this->redirect('home');
 
 		$iis = array_shift($parsedURL);
 		// kontroler je 1. parametr URL
@@ -48,7 +48,7 @@ class RouterController extends Controller
 		if (file_exists('controller/' . $controllerClass . '.php'))
 			$this->controller = new $controllerClass;
 		else
-			$this->redirect('iis/error');
+			$this->redirect('error');
 		
 		// Volání controlleru
         $this->controller->handle($parsedURL);

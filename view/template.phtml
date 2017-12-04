@@ -6,16 +6,16 @@
 		<title><?= $title ?></title>
 		<meta name="description" content="<?= $description ?>" />
 		<meta name="keywords" content="<?= $keywords ?>" />
-		<link rel="stylesheet" href="iis/css/style.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/navigation.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/start.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/hunter.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/outpost.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/expedition.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/user.css" type="text/css"/>
-		<link rel="stylesheet" href="iis/css/admin.css" type="text/css"/>
-		<script type='text/javascript' src='iis/js/expedition.js'></script>
-		<script type='text/javascript' src='iis/js/heal.js'></script>
+		<link rel="stylesheet" href="<?= url('css/style.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/navigation.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/start.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/hunter.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/outpost.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/expedition.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/user.css') ?>" type="text/css"/>
+		<link rel="stylesheet" href="<?= url('css/admin.css') ?>" type="text/css"/>
+		<script type='text/javascript' src='<?= url('js/expedition.js') ?>'></script>
+		<script type='text/javascript' src='<?= url('js/heal.js') ?>'></script>
 	</head>
 	<body>
 		<header>
@@ -26,15 +26,16 @@
 		<nav>
 			<div class="center">
 				<ul>
-					<li><a href="iis/home">Home</a></li>
+					<li><a href="<?= url('home') ?>">Home</a></li>
 					<?php if (isLoggedIn()): ?>
-						<li><a href="iis/hunter/overview">Hunters</a></li>
-						<li><a href="iis/logout">Log out</a></li>
+						<li><a href="<?= url('hunter/overview') ?>">Hunters</a></li>
+						<li><a href="<?= url('logout') ?>">Log out</a></li>
 						<div id="stats">
-							<p id="stats-name"><a href="iis/user/detail/<?= $user->getId() ?>"><?= $_SESSION['user'] ?></a></p>
+							<p id="stats-name"><a href="<?= url('user/detail/'.$user->getId()) ?>"><?= $_SESSION['user'] ?></a></p>
 							<p id="stats-food">Food: <?= $user->getFood()?></p>
 							<p id="stats-lvl">Level: <?= $user->getLevel()?></p>
 							<p id="stats-exp">Exp: <?= $user->getExp()?></p>
+							<p id="stats-hunters"><?= $user->getMyHuntersCount() ?>/<?= $user->getLevel()+3?> Hunters</p>
 						</div>
 					<?php endif; ?>		
 				</ul>
@@ -50,12 +51,12 @@
 				<p>
 					<?php if (isLoggedIn()) : ?>
 						<?php if ($user->getRole() == 'admin') : ?>
-							<a href="iis/admin/controlPanel">Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</a>
+							<a href="<?= url('admin/controlPanel') ?>">Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</a>
 						<?php else : ?>
 							Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)
 						<?php endif; ?>
 					<?php else : ?>
-						<a href="iis/admin/login">Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</a>
+						<a href="<?= url('admin/login') ?>">Rudolf Kučera (xkucer91) a Dominik Drdák (xdrdak01)</a>
 					<?php endif; ?>
 				</p>
 			</div>

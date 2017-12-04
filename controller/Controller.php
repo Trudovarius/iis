@@ -28,6 +28,8 @@ abstract class Controller
 	// Hlavička HTML stránky
 	protected $header = array('title' => '', 'keywords' => '', 'description' => '');
 
+	public static $url = 'iis/';
+
 	// Ošetří proměnnou pro výpis do HTML stránky
 	private function parse($x = null)
 	{
@@ -61,6 +63,7 @@ abstract class Controller
 	// Přesměruje na dané URL
 	public function redirect($url)
 	{
+		$url = self::$url . $url;
 		header("Location: /$url");
 		header("Connection: close");
         exit;

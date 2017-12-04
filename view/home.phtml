@@ -4,7 +4,7 @@
 			<?php foreach ($outposts as $outpost) : ?>
 				<div style="float:left; margin: 10px;">
 					<p><?= $outpost['outpost'] ?></p>
-					<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/outpost.jpg"></a>
+					<a href="<?= url('outpost/detail/'.$outpost['id']) ?>"><img src="<?= url('img/outpost.jpg') ?>"></a>
 				</div>
 			<?php endforeach; ?>
 		<?php endif; ?>
@@ -14,7 +14,7 @@
 			<?php foreach ($pits as $pit) : ?>
 				<div style="float:left; margin: 10px;">
 					<p><?= $pit['id'] ?></p>
-					<a href="iis/outpost/detail/<?= $outpost['id'] ?>"><img src="iis/img/pit.jpg" width="70" height="70"></a>
+					<a href="<?= url('outpost/detail/'.$outpost['id']) ?>"><img src="<?= url('img/pit.jpg') ?>" width="70" height="70"></a>
 				</div>
 			<?php endforeach; ?>
 		<?php endif; ?>
@@ -25,7 +25,7 @@
 		<div id="timer">
 			<?php foreach($expInProgress as $i => $expedition) : ?>
 				<p>
-					<a href="iis/expedition/detail/<?= $expedition['id'] ?>">
+					<a href="<?= url('expedition/detail/'.$expedition['id']) ?>">
 						Expedition
 					</a> ends in: 
 					<span>
@@ -64,27 +64,27 @@
 				<?php foreach ($reports as $report) : ?>
 						<tr>
 							<td><?= str_replace(' ',"<br>",$report['date']); ?></td>
-							<td><a href="iis/outpost/detail/<?= $report['outpost'] ?>"><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></a></td>
+							<td><a href="<?= url('outpost/detail/'.$outpost['id']) ?>"><?= Outpost::getOutpostById($report['outpost'])['outpost'] ?></a></td>
 							<td><?= $report['mammothCount'] ?></td>
 							<?php if ($report['completion'] == '1') : ?>
 								<td>
 									Completed <br>
-									<a href="iis/expedition/detail/<?= Report::hasExpedition($report['id'])[0]['id'] ?>">
-										See Expedition <img src="iis/img/lens.png" height="15px">
+									<a href="<?= url('expedition/detail/'.Report::hasExpedition($report['id'])[0]['id']) ?>">
+										See Expedition <img src="<?= url('img/lens.png') ?>" height="15px">
 									</a>
 								</td>
 							<?php else : ?>
 								<?php if(!Report::hasExpedition($report['id'])) : ?>
 									<td>
-										<form method="POST" action="iis/expedition/create">
+										<form method="POST" action="<?= url('expedition/create')?>">
 											<input type="hidden" name="report" value="<?= $report['id'] ?>">
 											<input type="submit" value="Create Expedition">
 										</form>
 									</td>
 								<?php else : ?>
 									<td>
-										<a href="iis/expedition/detail/<?= Report::hasExpedition($report['id'])[0]['id'] ?>">
-											Expedition <br>in progress <img src="iis/img/lens.png" height="15px">
+										<a href="<?= url('expedition/detail/'. Report::hasExpedition($report['id'])[0]['id']) ?>">
+											Expedition <br>in progress <img src="<?= url('img/lens.png') ?>" height="15px">
 										</a>
 									</td>
 								<?php endif; ?>
@@ -100,11 +100,11 @@
 		<tr>
 			<td colspan="4">
 				<?php if ($_GET['page'] != 1) : ?>
-					<a href="iis/home?page=<?= $_GET['page'] - 1 ?>"><</a>
+					<a href="<?= url('home?page='.($_GET['page'] - 1)) ?>"><</a>
 				<?php endif; ?>
 				<?= $_GET['page'] ?>
 				<?php if (sizeof($reports)%5 == 0) : ?>
-					<a href="iis/home?page=<?= $_GET['page'] + 1 ?>">></a>
+					<a href="<?= url('home?page='.($_GET['page'] + 1)) ?>">></a>
 				<?php endif; ?>
 			</td>
 		</tr>

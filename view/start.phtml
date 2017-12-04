@@ -1,4 +1,9 @@
 <h1>Welcome</h1>
+<?php if (isset($error)) : ?>
+	<div id="errorMsg">
+		<?= $error ?>
+	</div>
+<?php endif;?>
 <div class="left">
 	<h1>Login</h1>
 	<form method="post">

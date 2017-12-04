@@ -37,13 +37,13 @@ class OutpostController extends Controller
                     if (isset($_POST['hunterId'])) {
                         if ($outpost['capacity'] > $outpost['hunterCount']) {
                             Hunter::setOutpost($_POST['hunterId'], $outpost['id']);
-                            $this->redirect('iis/outpost/detail/'.$parameters[1]);
+                            $this->redirect('outpost/detail/'.$parameters[1]);
                         }
                     }
 
                     if (isset($_POST['removeHunter'])) {
                         Hunter::unsetOutpost($_POST['removeHunter'], $outpost['id']);
-                        $this->redirect('iis/outpost/detail/'.$parameters[1]);
+                        $this->redirect('outpost/detail/'.$parameters[1]);
                     }
 
                     $this->view = 'outpost';
